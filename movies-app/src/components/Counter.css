@@ -1,0 +1,27 @@
+.counterWrapper {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 15px;
+    text-align: center;
+    padding: 25px;
+    background-color: #5f9ea0;
+    padding: 20px;
+}
+
+.counterWrapper span {
+    margin-left: 5px;
+    font-size: 30px;
+
+}
+
+.buttonsWrapper{
+    margin-top:15px;
+}
+
+.buttonsWrapper button{
+    margin: 5px;
+}
+
+button{
+    padding: 5px;
+}
