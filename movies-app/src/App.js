@@ -2,6 +2,7 @@ import React, { useState} from "react";
 import './App.css';
 import Counter from './components/Counter';
 import SearchForm from './components/SearchForm'
+import GenreSelect from './components/GenreSelect'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
 
       <Counter counterNr={0} />
       <SearchForm onSearch={handleSearch} searchVal={searchQuery} />
+      <GenreSelect />
       
     </div>
   );
