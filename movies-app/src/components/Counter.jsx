@@ -25,7 +25,7 @@ class Counter extends React.Component {
 
     decrement = () => {
         this.setState({
-            counterNr: Math.max(this.state.counterNr - 1),
+            counterNr: this.state.counterNr - 1,
         });
     }
 
