@@ -1,11 +1,12 @@
 import React, { useState} from "react";
 import './App.css';
-// import Counter from './components/Counter';
+import Counter from './components/Counter';
 import SearchForm from './components/SearchForm'
 import GenreSelect from './components/GenreSelect'
 
 function App() {
 
+  /* Search Movie */
   const initialSearch = {
     searchQuery: 'Star Wars',
     id: '181808'
@@ -18,6 +19,20 @@ function App() {
     console.log(searchQuery)
   }
 
+  /* Genres */
+  const genresAll = [
+      "All", 
+      "Drama", 
+      "Romance",
+      "Animation",
+      "Adventure", 
+      "Family",
+      "Comedy",
+      "Fantasy",
+      "Science Fiction",
+      "Action"
+  ];
+
   const handleGenreSelect = (selectedGenre) => {
     console.log(selectedGenre)
   }
@@ -25,11 +40,11 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        {/* <Counter counterNr={0} /> */}
+        <Counter counterNr={0} />
         <SearchForm onSearch={handleSearch} searchVal={searchQuery} />
       </div>
       <div className="pageContent">
-        <GenreSelect onSelect={handleGenreSelect}/>
+        <GenreSelect onSelect={handleGenreSelect} genres={genresAll}/>
       </div>
     </div>
   );
