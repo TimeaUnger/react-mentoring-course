@@ -39,12 +39,12 @@ class Counter extends React.Component {
         return createElement(
 
             'div',
-                { className: 'counterWrapper' },
-                createElement('h3', null, 'Count'),
-                createElement('span',null, this.state.counterNr),
+                { className: 'counterWrapper'},
+                createElement('h3', null, 'Counter'),
+                createElement('span',{'data-testid': 'counterValue'}, this.state.counterNr),
                 createElement('div', {className: 'buttonsWrapper'},
-                    createElement('button', {onClick: this.decrement}, 'Decrement'),
-                    createElement('button', {onClick: this.increment}, 'Increment'),  
+                    createElement('button', {onClick: this.decrement, 'data-testid': 'counterDecrement'}, 'Decrement'),
+                    createElement('button', {onClick: this.increment, 'data-testid': 'counterIncrement'}, 'Increment'),  
                 ),
                 createElement('button', {onClick: this.resetCount}, 'Reset'),
         );
