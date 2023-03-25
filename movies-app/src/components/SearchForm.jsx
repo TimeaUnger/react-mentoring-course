@@ -7,7 +7,7 @@ const SearchForm = (props) => {
         searchVal: props.searchVal.searchQuery
     };
 
-    const [searchVal, setSearchVal] = useState(initialState);
+    const [searchVal, setSearchVal] = useState(initialState.searchVal);
 
     const handleSearch = (event) => {
 
@@ -33,15 +33,16 @@ const SearchForm = (props) => {
             <div className="searchInput">
                 <input
                     type="search"
+                    data-testid="searchInput"
                     placeholder="Search movie"
                     onKeyDown={handleSearch}
                     onFocus={handleSearch}
                     onChange={inputHandler}
-                    val={searchVal}
+                    value={searchVal}
                 />
             </div>
            <div className="searchButton">
-                <button onClick={handleBtnClick} >Search</button>
+                <button data-testid="searchButton" onClick={handleBtnClick} >Search</button>
            </div>
         </div>
     )
