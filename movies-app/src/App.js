@@ -12,13 +12,6 @@ function App() {
     id: '181808'
   };
 
-  const [searchQuery, setSearchTerm] = useState(initialSearch);
-
-  const handleSearch = (searchQuery) => {
-    setSearchTerm(searchQuery);
-    console.log(searchQuery)
-  }
-
   /* Genres */
   const genresAll = [
       "All", 
@@ -33,8 +26,15 @@ function App() {
       "Action"
   ];
 
+  const [searchQuery, setSearchTerm] = useState(initialSearch);
+  const [active, setActive] = useState(false)
+
+  const handleSearch = (searchQuery) => {
+    setSearchTerm(searchQuery);
+  }
+
   const handleGenreSelect = (selectedGenre) => {
-    console.log(selectedGenre)
+    setActive(selectedGenre)
   }
 
   return (
@@ -44,7 +44,7 @@ function App() {
         <SearchForm onSearch={handleSearch} searchVal={searchQuery} />
       </div>
       <div className="pageContent">
-        <GenreSelect onSelect={handleGenreSelect} genres={genresAll}/>
+        <GenreSelect onSelect={handleGenreSelect} genres={genresAll} isActive={active}/>
       </div>
     </div>
   );

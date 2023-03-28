@@ -3,8 +3,8 @@ import './GenreSelect.css';
 
 const GenreSelect = (props) => {
     
-    const [genres, setGenres] = useState(props.genres || []);
-    const [active, setActive] = useState(false)
+    // const [genres, setGenres] = useState(props.genres || []);
+    // const [active, setActive] = useState(false)
 
     // useEffect(() => {
     //   fetch('http://localhost:4000/movies')
@@ -23,21 +23,20 @@ const GenreSelect = (props) => {
     //      });
     // }, []);
 
-    const onSelectHadler = (event) => {
+    const onSelectHandler = (event) => {
       const genre = event.target.innerHTML;
       props.onSelect(genre) 
-      setActive(genre)
     }
 
     return (
       <div className="genreSelect">
         <ul data-testid="GenreListItem" aria-label="genresAll">
-          {genres.map((genre, index) => {
+          {props.genres.map((genre, index) => {
             return (
               <li
                 key={index} 
-                onClick={onSelectHadler}
-                className={`genreItem ${active === genre && 'active'}`}
+                onClick={onSelectHandler}
+                className={`genreItem ${props.isActive === genre && 'active'}`}
               >
                 { genre }
               </li>
