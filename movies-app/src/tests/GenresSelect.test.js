@@ -7,6 +7,7 @@ import '@testing-library/jest-dom'
 import { render, screen, within, fireEvent } from '@testing-library/react';
 
 import App from "../App";
+import GenreSelect from '../components/GenreSelect';
 
 describe('App GenresSelect', () => {
 
@@ -33,7 +34,7 @@ describe('App GenresSelect', () => {
 
   it('component renders all genres passed in props', () => {
 
-    render(<App genres={genresAll} />);
+    render(<GenreSelect genres={genresAll} />);
 
     const list = screen.getByRole("list", {
       name: /genresAll/i,
@@ -58,6 +59,10 @@ describe('App GenresSelect', () => {
     const genreItem = getAllByRole("listitem");
 
     fireEvent.click(genreItem[1]);
+
+    const activeElements = list.getElementsByClassName('active');
+
+    expect(activeElements.length).toBe(1)
     expect(genreItem[1].classList.contains('active')).toBe(true)
 
   });
@@ -66,9 +71,12 @@ describe('App GenresSelect', () => {
 
     render(<App genres={genresAll} />);
     
-    const onSelectHadler = () => { return "All" }
+    const mockCallback = jest.fn( genre => {
+      return genre;
+    });
+
     jest.mock("../components/GenreSelect", () => () => {
-      return <mock-modal onClick={onSelectHadler}/>;
+      return <mock-modal onClick={mockCallback}/>;
     });
 
     const list = screen.getByRole("list", {
@@ -79,7 +87,9 @@ describe('App GenresSelect', () => {
     const genreItem = getAllByRole("listitem");
 
     fireEvent.click(genreItem[1]);
-    expect(onSelectHadler(genreItem[1])).toBe('All') 
+
+    expect(mockCallback(genreItem[1].textContent)).toBe(genreItem[1].textContent); 
+    expect(mockCallback.mock.calls).toHaveLength(1);
 
   });
 
