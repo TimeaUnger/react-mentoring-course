@@ -7,10 +7,12 @@ import GenreSelect from './components/GenreSelect'
 function App() {
 
   /* Search Movie */
-  const initialSearch = {
-    searchQuery: 'Star Wars',
-    id: '181808'
-  };
+  // const initialSearch = {
+  //   searchQuery: 'Star Wars',
+  //   id: '181808'
+  // };
+
+  const initialSearch = "Star Wars";
 
   /* Genres */
   const genresAll = [

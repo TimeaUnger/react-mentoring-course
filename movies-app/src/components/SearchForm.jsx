@@ -2,12 +2,8 @@ import React, { useState} from "react";
 import './SearchForm.css';
 
 const SearchForm = (props) => {
-
-    const initialState = {
-        searchVal: props.searchVal.searchQuery
-    };
-
-    const [searchVal, setSearchVal] = useState(initialState.searchVal);
+    
+    const [searchVal, setSearchVal] = useState(props.searchVal);
 
     const handleSearch = (event) => {
 
@@ -25,6 +21,7 @@ const SearchForm = (props) => {
     }
     
     const inputHandler = (event) => {
+        
         setSearchVal(event.target.value)
     }
 
