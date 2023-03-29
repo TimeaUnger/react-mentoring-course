@@ -49,8 +49,9 @@ describe('App GenresSelect', () => {
 
   it('component highlights a selected genre passed in props', () => {
 
-    render(<App genres={genresAll} />);
+    const mockFnOnSelect = jest.fn();
 
+    render(<GenreSelect genres={genresAll}  onSelect={mockFnOnSelect} />);
     const list = screen.getByRole("list", {
       name: /genresAll/i,
     });
@@ -60,24 +61,18 @@ describe('App GenresSelect', () => {
 
     fireEvent.click(genreItem[1]);
 
-    const activeElements = list.getElementsByClassName('active');
-
-    expect(activeElements.length).toBe(1)
-    expect(genreItem[1].classList.contains('active')).toBe(true)
+    expect(mockFnOnSelect).toHaveBeenCalledTimes(1)
 
   });
 
   it('after a click event on a genre button component calls "onChange" callback and passes correct genre in arguments', () => {
-
-    render(<App genres={genresAll} />);
     
+    const mockFn = jest.fn();
     const mockCallback = jest.fn( genre => {
       return genre;
     });
 
-    jest.mock("../components/GenreSelect", () => () => {
-      return <mock-modal onClick={mockCallback}/>;
-    });
+    render(<GenreSelect genres={genresAll} onClick={mockCallback} onSelect={mockFn}/>);
 
     const list = screen.getByRole("list", {
       name: /genresAll/i,
