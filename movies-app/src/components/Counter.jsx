@@ -41,10 +41,10 @@ class Counter extends React.Component {
             'div',
                 { className: 'counterWrapper'},
                 createElement('h3', null, 'Counter'),
-                createElement('span',{'data-testid': 'counterValue'}, this.state.counterNr),
+                createElement('span',{className: 'counterNr', 'data-testid': 'counterValue'}, this.state.counterNr),
                 createElement('div', {className: 'buttonsWrapper'},
-                    createElement('button', {onClick: this.decrement, 'data-testid': 'counterDecrement'}, 'Decrement'),
-                    createElement('button', {onClick: this.increment, 'data-testid': 'counterIncrement'}, 'Increment'),  
+                    createElement('button', {className: 'counterDecrement', onClick: this.decrement, 'data-testid': 'counterDecrement'}, 'Decrement'),
+                    createElement('button', {className: 'counterIncrement', onClick: this.increment, 'data-testid': 'counterIncrement'}, 'Increment'),  
                 ),
                 createElement('button', {onClick: this.resetCount}, 'Reset'),
         );
