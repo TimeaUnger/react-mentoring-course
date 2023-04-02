@@ -1,0 +1,78 @@
+.moviesBody {
+	padding: 10px 40px;
+}
+
+.foundMovies {
+	color: #fff;
+	padding: 10px 0 25px 25px;
+}
+
+.foundMoviesNr {
+	font-family: Montserrat;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: 0px;
+}
+
+.foundMoviesTitle {
+	font-family: Montserrat;
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 24px;
+	letter-spacing: 0px;
+	padding-left: 5px;
+}
+
+.moviesWrapper {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	text-align: center;
+}
+
+.movieTile {
+	flex-grow: 1;
+	width: 33%;
+	margin-bottom: 30px;
+}
+
+.movieImage {
+	height: 486px;
+}
+
+.movieTile img {
+	max-width: 323px;
+	max-height: 486px;
+	color: #9d9d9d;
+}
+
+.movieTileDetails {
+	padding: 15px 27px;
+}
+
+.releaseDate {
+	float: right;
+	color: #9d9d9d;
+	border: 1px solid #9d9d9d;
+	border-radius: 3px;
+	padding: 2px 13px;
+	font-size: 14px;
+}
+
+.movieTitle {
+	font-size: 18px;
+	color: #d4cdcd;
+	float: left;
+}
+
+.movieGenre {
+	font-size: 14px;
+	font-weight: 500;
+	color: #9d9d9d;
+	display: inline-block;
+	text-align: left;
+	width: 323px;
+	padding-top: 13px;
+
+}

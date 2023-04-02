@@ -4,15 +4,23 @@
 }
 
 .App{
+  width: 1200px;
+  margin: 0 auto;
+  font-family: Montserrat;
+}
+
+.pageBody {
   background: #232323;
 }
 
-.pageContent {
-  background: #232323;
-}
-
-.header {
+.pageHeader {
   position: relative;
-  height: 396px;
-  left: 58px;
+}
+
+.selectSection {
+  display: flex;
+  border-bottom: #424242 2px solid;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
 }
