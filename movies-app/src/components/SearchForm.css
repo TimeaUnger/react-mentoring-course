@@ -1,42 +1,65 @@
-.searchWrapper{
+.searchWrapper {
+	margin: 0 auto;
+	display: flex;
+	height: 400px;
+	background-color: #232323;
+	margin-bottom: 10px;
+}
 
-    max-width: 1260px;
-    margin: 0 auto;
-    display: flex;
-    position: absolute;
-    top: 50%;
+.searchInnerContent {
+	width: 90%;
+	margin: auto;
+}
+
+.findMovieLabel {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 300;
+	font-size: 40px;
+	text-align: center;
+	letter-spacing: 1px;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.searchInputRow {
+	display: flex;
 }
 
 .searchInput input {
-    height: 57px;
-    width: 713px;
-    border-radius: 4px;
-    background: rgba(235, 235, 235, 0.8);
-    mix-blend-mode: normal;
-    border-radius: 4px;
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0px;
-    text-align: left;
-    padding-left: 20px;
-    margin-right: 5px;
+	height: 57px;
+	width: 713px;
+	border-radius: 4px;
+	background: #323232CC;
+
+	opacity: 0.7;
+	border-radius: 4px;
+	font-family: Montserrat;
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 24px;
+	letter-spacing: 0px;
+	text-align: left;
+	padding-left: 20px;
+	margin-right: 5px;
+	color: #FFFFFF;
 }
 
-.searchButton button{
-    height: 57px;
-    width: 233px;
-    border-radius: 4px;
-    background: #F65261;
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0px;
-    text-align: center;
+.searchButton button {
+	height: 57px;
+	width: 233px;
+	border-radius: 4px;
+	background: #F65261;
+	font-family: Montserrat;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	letter-spacing: 0px;
+	text-align: center;
 }
 
 .searchButton button:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
