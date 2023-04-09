@@ -14,40 +14,25 @@ import './MovieTile.css';
 
 const MovieTile = (props) => {
 
-  const showDetails = (movie) => {
-
-      props.handleMovieClick(movie)
+  const showDetails = (movieDetails) => {
+      props.handleMovieClick(movieDetails)
   }
-
+  
+  const {title, release_date, genres, poster_path } = props.movieDetails;
+  
   return (
-    <div className="moviesBody">
-      <div className="moviesBodyInner">
-        <div className="foundMovies">
-          <span className="foundMoviesNr">{props.movies?.length}</span>
-          <span className="foundMoviesTitle">movies found</span>
-        </div>
-        <div className="moviesWrapper">
-          {
-            props.movies?.map((movie, index) => {
-              return (
-                <div className="movieTile" onClick={()=> showDetails(movie)} key={movie.id}>
-                  <div className="movieImage">
-                    <img src={movie.poster_path} alt={movie.title} />
-                  </div>
-                  <div className="movieTileDetails">
-                    <div className="movieTitleWrapper">
-                      <div className="movieTitle">{movie.title}</div>
-                      <div className="releaseDate">{movie.release_date.substr(0, 4)}</div>
-                    </div>
-                  </div>
-                    <div className="movieGenre">{movie.genres.join(", ")}</div>
-                </div>
-              )
-            })}
+    <div className="movieTile">
+      <div className="movieImage" onClick={()=> showDetails(props.movieDetails)}>
+        <img src={poster_path} alt={title} />
+      </div>
+      <div className="movieTileDetails">
+        <div className="movieTitleWrapper">
+          <div className="movieTitle">{title}</div>
+          <div className="releaseDate">{release_date.substr(0, 4)}</div>
         </div>
       </div>
+        <div className="movieGenre">{genres.join(", ")}</div>
     </div>
-
   );
 }
 

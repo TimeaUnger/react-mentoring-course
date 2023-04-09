@@ -4,7 +4,7 @@ import Counter from './components/Counter';
 import SearchForm from './components/SearchForm';
 import GenreSelect from './components/GenreSelect';
 import SortControl from './components/SortControl';
-import MovieTile from './components/MovieTile';
+import MovieTiles from './components/MovieTiles';
 import MovieDetails from "./components/MovieDetails";
 
 function App() {
@@ -15,29 +15,26 @@ function App() {
   const [movieDetails, setMovieDetails] = useState({});
   const [showMovieDetails, setShowMovieDteails] = useState(false);
   const [searchQuery, setSearchTerm] = useState(initialSearch);
-  const [genresUnique, setGenres] = useState([]);
+  const [genresUnique, setGenresUnique] = useState([]);
   const [active, setActive] = useState(false);
   const [sortSelected, setSortSelected] = useState("release_date");
-
+  const moviesUrl = `http://localhost:4000/movies?sortBy=${sortSelected}&sortOrder=asc`;
+  
+  
   useEffect(() => {
-
-    fetch('http://localhost:4000/movies')
-      .then((response) => response.json())
+    
+    fetch(moviesUrl)
+    .then((response) => response.json())
       .then((res) => {
-
         // set the unique "genres" from the object received
         let genresArr = ["All"];
-        res.data.forEach(function (value, index, array) {
+        res.data.forEach(function (value) {
           genresArr.push(...value.genres)
         });
 
         let genresUnique = genresArr.filter((value, index, array) => array.indexOf(value) === index);
-        setGenres(genresUnique);
-
-        // by default the movies sorted by Release Date
-        const sortedList = res.data.sort((a, b) =>
-        a.release_date.localeCompare(b.release_date));
-        setMovies(sortedList);
+        setGenresUnique(genresUnique);
+        setMovies(res.data);
 
       })
       .catch((err) => {
@@ -96,7 +93,7 @@ function App() {
             <GenreSelect onSelect={handleGenreSelect} genres={genresUnique} isActive={active} />
             <SortControl handleSelect={handleSortSelection} />
           </div>
-          {movies && <MovieTile movies={movies} handleMovieClick={handleTileClick} sortSelected={sortSelected}/>}
+          {movies && <MovieTiles movies={movies} handleMovieClick={handleTileClick} sortSelected={sortSelected}/>}
           
         </div>
     </div>

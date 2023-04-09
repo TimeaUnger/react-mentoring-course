@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom'
 import { render, screen, within, fireEvent } from '@testing-library/react';
 
-import MovieTile from '../components/MovieTile';
+import MovieTiles from '../components/MovieTiles';
 import { moviesAll } from '../mocks/Movies';
 
 describe('App MovieTile', () => {
@@ -13,7 +13,7 @@ describe('App MovieTile', () => {
  
   it('component renders all movies passed in props', () => {
 
-    const {container} = render(<MovieTile movies={moviesAll} />);
+    const {container} = render(<MovieTiles movies={moviesAll} />);
     const movieTile = container.getElementsByClassName('movieTile');
 
     expect(movieTile.length).toBe(10);
@@ -22,19 +22,25 @@ describe('App MovieTile', () => {
 
   it('after a click event on a tile component calls "onClick" callback and passes correct movie in arguments', () => {
     
-    const mockFn = jest.fn();
-    const mockCallback = jest.fn( movie => {
-      return movie;
-    });
+    const objInitialProps = {
+      movies: moviesAll,
+      onClick: jest.fn(),
+      handleMovieClick: jest.fn()
+    }
 
-    const {container} = render(<MovieTile movies={moviesAll} onClick={mockCallback} handleMovieClick={mockFn}/>);
-    const movieTiles = container.getElementsByClassName('movieTile');
+    const {container} = render(<MovieTiles {...objInitialProps} />);
+    const {handleMovieClick} = objInitialProps;
+    const movieTiles = container.getElementsByClassName('movieImage');
 
     fireEvent.click(movieTiles[1]);
 
-    expect(mockCallback(moviesAll[1])).toMatchObject(moviesAll[1]);
-    expect(mockCallback.mock.calls).toHaveLength(1);
-
+    expect(handleMovieClick).toHaveBeenCalledTimes(1);
+    expect(handleMovieClick).toBeCalledWith(
+      expect.objectContaining({
+        id: moviesAll[1].id
+      })
+    ); 
+    
   });
 
 });

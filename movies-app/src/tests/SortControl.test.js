@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 
 import SortControl from '../components/SortControl';
 
@@ -8,17 +9,21 @@ describe('App SortControl', () => {
  
   it('select an option and passing the option properly ', () => {
 
-    const mockCallback = jest.fn( (sortOption) => {
-      return sortOption;
-    });
-    
-    const {container} = render(<SortControl onChange={mockCallback}/>);
+    const objInitialProps = {
+      onChange: jest.fn(),
+      handleSelect: jest.fn()
+    }
+    const {container} = render(<SortControl {...objInitialProps} />);
     const sortOption = container.getElementsByClassName('sortOption');
+    const {handleSelect} = objInitialProps;
 
-    fireEvent.click(sortOption[1]);
+    userEvent.selectOptions(        
+        screen.getByRole('combobox'),        
+        sortOption[1]    
+    )
   
-    expect(mockCallback(sortOption[1].value)).toBe(sortOption[1].value);
-    expect(mockCallback.mock.calls).toHaveLength(1);
+    expect(handleSelect).toHaveBeenCalledTimes(1);
+    expect(handleSelect).toBeCalledWith(sortOption[1].value); 
   
   });
 

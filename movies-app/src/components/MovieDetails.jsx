@@ -20,8 +20,9 @@ const MovieDetails = (props) => {
     }
 
     const showSearchHeader = () => {
-      props.showSearchHeader()
+      props.showSearchHeader();
     }
+    const {title, poster_path, vote_average, genres, release_date, runtime, overview} = props.movie
 
     return (
       <div className="movieDetailsContainer">
@@ -32,21 +33,21 @@ const MovieDetails = (props) => {
         <div className="moviesDetails">
           <div className="movieDetailsInner">
             <div className="movieImage">
-                <img src={props.movie.poster_path} alt={props.movie.title} />
+                <img src={poster_path} alt={title} />
             </div>
             <div className="movieSummary">
               <div className="movieDetailsHeader">
-                  <div className="movieDetailsTitle">{props.movie.title}</div>
+                  <div className="movieDetailsTitle">{title}</div>
                   <div className="movieDetailsRatingCircle">
-                      <span className="movieDetailsRating">{props.movie.vote_average}</span>
+                      <span className="movieDetailsRating">{vote_average}</span>
                   </div>
               </div>
-              <div className="movieDetailsGenre">{props.movie.genres.join(", ")}</div>
+              <div className="movieDetailsGenre">{genres.join(", ")}</div>
               <div className="movieDateRuntimeWrapper">
-                  <div className="movieDetailsReleaseDate">{props.movie.release_date.substr(0, 4)}</div>
-                  <div className="movieDetailsRunTime">{toHoursAndMinutes(props.movie.runtime)}</div>
+                  <div className="movieDetailsReleaseDate">{release_date.substr(0, 4)}</div>
+                  <div className="movieDetailsRunTime">{toHoursAndMinutes(runtime)}</div>
               </div>
-              <div className="movieDetailsOverview">{props.movie.overview}</div>
+              <div className="movieDetailsOverview">{overview}</div>
             </div>
           </div>
         </div>
