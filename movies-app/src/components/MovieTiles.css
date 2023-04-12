@@ -1,0 +1,32 @@
+.moviesBody {
+	padding: 10px 40px;
+}
+
+.foundMovies {
+	color: #fff;
+	padding: 10px 0 25px 25px;
+}
+
+.foundMoviesNr {
+	font-family: Montserrat;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: 0px;
+}
+
+.foundMoviesTitle {
+	font-family: Montserrat;
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 24px;
+	letter-spacing: 0px;
+	padding-left: 5px;
+}
+
+.moviesWrapper {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	text-align: center;
+}

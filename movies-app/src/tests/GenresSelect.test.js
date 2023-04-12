@@ -6,14 +6,9 @@ import React from 'react';
 import '@testing-library/jest-dom'
 import { render, screen, within, fireEvent } from '@testing-library/react';
 
-import App from "../App";
 import GenreSelect from '../components/GenreSelect';
 
 describe('App GenresSelect', () => {
-
-  jest.mock("../components/GenreSelect", () => () => {
-    return <mock-modal />;
-  });
 
   afterEach(() => {
     jest.clearAllMocks();

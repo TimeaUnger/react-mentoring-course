@@ -14,7 +14,6 @@ class Counter extends React.Component {
 
         this.increment = this.increment.bind(this);
         this.decrement = this.decrement.bind(this);
-        this.resetCount = this.resetCount.bind(this);
     }
 
     increment = () => {
@@ -29,24 +28,15 @@ class Counter extends React.Component {
         });
     }
 
-    resetCount = () => {
-        this.setState({
-            counterNr: 0,
-        });
-    }
-
     render() {
         return createElement(
 
             'div',
                 { className: 'counterWrapper'},
-                createElement('h3', null, 'Counter'),
+                createElement('button', {className: 'counterDecrement', onClick: this.decrement, 'data-testid': 'counterDecrement'}, 'Decrement'),
                 createElement('span',{className: 'counterNr', 'data-testid': 'counterValue'}, this.state.counterNr),
-                createElement('div', {className: 'buttonsWrapper'},
-                    createElement('button', {className: 'counterDecrement', onClick: this.decrement, 'data-testid': 'counterDecrement'}, 'Decrement'),
-                    createElement('button', {className: 'counterIncrement', onClick: this.increment, 'data-testid': 'counterIncrement'}, 'Increment'),  
-                ),
-                createElement('button', {onClick: this.resetCount}, 'Reset'),
+                createElement('button', {className: 'counterIncrement', onClick: this.increment, 'data-testid': 'counterIncrement'}, 'Increment'),             
+                
         );
     }
 }
