@@ -29,7 +29,7 @@ describe('App SearchForm',  () => {
     fireEvent.change(searchInput, {target: {value: 'Search Query'}});
     const searchButton = screen.getByTestId('searchButton');
     fireEvent.click(searchButton);
-
+    
     expect(mockCallback.mock.calls).toHaveLength(1);
     expect(mockCallback(searchInput.value)).toBe(searchInput.value);
   

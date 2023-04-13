@@ -1,10 +1,11 @@
-.moviesBody {
-	padding: 10px 40px;
+.movieTilesContent {
+	position: relative;
+	display: flex;
 }
 
 .foundMovies {
 	color: #fff;
-	padding: 10px 0 25px 25px;
+	padding: 25px 0 25px 27px;
 }
 
 .foundMoviesNr {
@@ -24,9 +25,14 @@
 	padding-left: 5px;
 }
 
-.moviesWrapper {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	text-align: center;
+.movieTilesWrapper {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 325px);
+	grid-gap: 2rem;
+	justify-content: space-between;
 }
+
+.movieListContentWrapper {
+	margin: 0 25px;
+}
+

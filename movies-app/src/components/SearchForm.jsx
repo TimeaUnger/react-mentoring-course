@@ -21,12 +21,20 @@ const SearchForm = (props) => {
   }
 
   const inputHandler = (event) => {
-
     setSearchVal(event.target.value)
+  }
+
+  const handleAddMovieClick = () => {
+    props.handleMovieAction('add', {})
   }
 
   return (
     <div className="searchWrapper">
+      <div className="addMovieWrapper">
+        <div className="addMovie" onClick={handleAddMovieClick}>
+          + Add movie
+        </div>
+      </div>
       <div className="searchInnerContent">
         <div className="findMovieLabel">Find your movie</div>
         <div className="searchInputRow">

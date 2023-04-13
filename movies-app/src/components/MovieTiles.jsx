@@ -8,24 +8,34 @@ const MovieTiles = (props) => {
       props.handleMovieClick(movie)
   }
 
+  const handleMovieAction = (action, movie) => {
+      props.handleMovieAction(action, movie);
+  }
+
   return (
-    <div className="moviesBody">
-      <div className="moviesBodyInner">
+    <>
+      <div className="foundMoviesWrapper">
         <div className="foundMovies">
-          <span className="foundMoviesNr">{props.movies?.length}</span>
-          <span className="foundMoviesTitle">movies found</span>
+            <span className="foundMoviesNr">{props.movies?.length}</span>
+            <span className="foundMoviesTitle">movies found</span>
         </div>
-        <div className="moviesWrapper">
+      </div>
+      <div className="movieListContentWrapper">
+        <div className="movieTilesWrapper">
           {
             props.movies?.map((movie) => {
               return (
-                <MovieTile movieDetails={movie} handleMovieClick={showMovieDetails} key={movie.id}/>
+                <MovieTile 
+                  movieDetails={movie} 
+                  handleMovieClick={showMovieDetails} 
+                  key={movie.id}
+                  handleMovieAction={handleMovieAction}
+                />
               )
             })}
         </div>
       </div>
-    </div>
-
+    </>
   );
 }
 
