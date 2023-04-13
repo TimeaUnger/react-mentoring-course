@@ -3,10 +3,10 @@ import Option from "./MultiSelectOption";
 
 const MultiSelectDropdown = (props) => { 
 
-	const {options, handleChange, defaultValue, isMulti, className } = props
+	const {options, handleSelectChange, defaultValue, isMulti, className, handleSelectClose } = props;
 
 		return (
-			<div className="multiSelectDropDown">
+			<div className="multiSelectDropDown" >
 				<span
 					className="d-inline-block"
 					data-toggle="popover"
@@ -17,13 +17,14 @@ const MultiSelectDropdown = (props) => {
 					options={options}
 					isMulti={isMulti}
 					closeMenuOnSelect={false}
-					hideSelectedOptions={false}
+					hideSelectedOptions={true}
 					components={{
 						Option
 					}}
-					onChange={handleChange}
+					onChange={handleSelectChange}
 					allowSelectAll={true}
 					defaultValue={defaultValue}
+					key={defaultValue}
 					classNamePrefix={className}
 				/>
 				</span>

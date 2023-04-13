@@ -1,4 +1,4 @@
-import React, { useState, useRef} from "react";
+import React, { useState } from "react";
 import MultiSelectDropdown from './MultiSelectDropdown';
 import Button from "./Button";
 import './MovieForm.css';
@@ -19,20 +19,27 @@ const MovieForm = (props) => {
 
 	const onEditSelectedOptions = props.formData.genres;
 	const arrSetGenres = [];
-	const formRef = useRef();
-	
+
 	// set existing genres if any into correct object format for multi-select options
 	onEditSelectedOptions?.map((genre) => {
 		arrSetGenres.push({value: `${genre}`, label: `${genre}`});
 	});
 
-	const [optionSelected, setMultiSelectOption] = useState(arrSetGenres);
+	const [optionSelected, setOptionSelected] = useState(arrSetGenres);
+	const [formState, setFormState] = useState(props.formData)
 	const { formAction } = props;
-	const {id, title, poster_path, vote_average, release_date, runtime, overview} = props.formData
 
-	const handleChange = (selected) => {
-    setMultiSelectOption(selected);
-  };
+	const handleSelectChange = (genres) => {
+		setOptionSelected(genres);
+	}
+
+	const handleInputChange = (evt) => {
+		const value = evt.target.value;
+		setFormState({
+			...formState,
+			[evt.target.name]: value
+		});
+	}
 
 	const handleSubmit = (event) => {
 
@@ -41,7 +48,7 @@ const MovieForm = (props) => {
 		const formDataSubmit = Object.fromEntries(new FormData(event.target));
 
 		if(formAction === 'delete'){
-			props.handleSubmit(id,'delete');
+			props.handleSubmit(formState.id,'delete');
 			props.handleCloseModal();
 		}
 		else{
@@ -61,8 +68,17 @@ const MovieForm = (props) => {
 	}
 
 	const resetForm = () => {
-		console.log('reset')
-		formRef.current.reset();
+
+		setFormState({
+			title: "",
+			poster_path: "",
+			vote_average: "",
+			release_date: "",
+			runtime: "",
+			overview: "",
+		});
+		
+		setOptionSelected([])
 	}
 
 	return (
@@ -70,7 +86,7 @@ const MovieForm = (props) => {
 		<div className="movieFormWrapper">
 			<div className="movieFormBoxTitle">{`${formAction} movie`}</div>
 			<div className="movieForm">
-				<form ref={formRef} onSubmit={handleSubmit}>
+				<form onSubmit={handleSubmit}>
 				{formAction === 'delete' 
 					?	<div className="deleteMovieContent">
 							<div className="deleteMovieBody">Are you sure you want to delete this movie?</div>
@@ -86,19 +102,20 @@ const MovieForm = (props) => {
 									<input 
 										type="text" 
 										className="movieTitleInput" 
-										data-testid="movieTitleInput"
 										name="title" 
 										id="movieTitle" 
-										defaultValue={title}
+										value={formState.title}
+										onChange={handleInputChange}
 									/>
 								</div>
-								<div className="movieReleaseDate">
+								<div className="movieReleaseDate" >
 									<label htmlFor="movieReleaseDate" className="movieFormLabel">Release date</label>
 									<input 
 										type="date" 
 										name="release_date" 
 										id="movieReleaseDate" 
-										defaultValue={release_date} 
+										value={formState.release_date}
+										onChange={handleInputChange}
 									/>
 								</div>
 							</div>
@@ -109,7 +126,8 @@ const MovieForm = (props) => {
 										type="text" 
 										name="poster_path" 
 										id="movieUrl" 
-										defaultValue={poster_path}
+										value={formState.poster_path}
+										onChange={handleInputChange}
 									/>
 								</div>
 								<div className="movieRating">
@@ -118,7 +136,8 @@ const MovieForm = (props) => {
 										type="text" 
 										name="vote_average" 
 										id="movieRating" 
-										defaultValue={vote_average}
+										value={formState.vote_average}
+										onChange={handleInputChange} 
 									/>
 								</div>
 							</div>
@@ -127,8 +146,8 @@ const MovieForm = (props) => {
 									<label htmlFor="movieGenre" className="movieFormLabel">Genre</label>
 									<MultiSelectDropdown 
 										options={multiSelectOptions}
-										handleChange={handleChange}
-										defaultValue={arrSetGenres}
+										defaultValue={optionSelected}
+										handleSelectChange={handleSelectChange}
 										isMulti={true}
 										className="movieFormOptions"
 									/>
@@ -139,16 +158,18 @@ const MovieForm = (props) => {
 										type="text" 
 										name="runtime" 
 										id="movieRuntime" 
-										defaultValue={runtime}				
+										value={formState.runtime}
+										onChange={handleInputChange} 				
 									/>
 								</div>
 							</div>
-							<div className="inputRow textarea">
+							<div className="inputRow textarea" >
 								<label htmlFor="movieOverview" className="movieFormLabel">Overview</label>
 								<textarea 
 									name="overview" 
 									id="movieOverview" 
-									defaultValue={overview}
+									value={formState.overview}
+									onChange={handleInputChange} 
 								>
 								</textarea>
 							</div>

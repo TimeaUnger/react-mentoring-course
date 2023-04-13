@@ -88,6 +88,7 @@ function App() {
   }
   
   const handleSubmit = (formData, action) => {
+    console.log(formData)
     if(action === 'delete') {
       setShowMovieDetails(false);
     }
