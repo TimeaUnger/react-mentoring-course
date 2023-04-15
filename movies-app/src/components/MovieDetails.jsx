@@ -3,7 +3,7 @@ import './MovieDetails.css';
 import defaultImage from '../assets/image-placeholder.jpg';
 
 const MovieDetails = (props) => {
-    // console.log(props)
+
     const toHoursAndMinutes = (totalMinutes) => {
 
       const hours = Math.floor(totalMinutes / 60);

@@ -25,7 +25,7 @@ const MovieTile = (props) => {
   }
 
   const handleAction = (action) => {
-    props.handleMovieAction(action, props.movieDetails);
+    props.showDialogMovieForm(action, props.movieDetails);
   }
 
   const handleMenuButton = () => {
