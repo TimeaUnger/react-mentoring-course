@@ -75,6 +75,7 @@
     "babel-plugin-named-exports-order": "^0.0.2",
     "chromedriver": "^111.0.0",
     "cypress": "^12.9.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "node-sass": "^8.0.0",
