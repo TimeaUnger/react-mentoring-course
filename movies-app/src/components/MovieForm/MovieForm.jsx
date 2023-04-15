@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import MultiSelectDropdown from './MultiSelectDropdown';
-import Button from "./Button";
+import MultiSelectDropdown from '../MultiSelectDropdown/MultiSelectDropdown';
+import Button from "../Button/Button";
 import './MovieForm.css';
 
 const MovieForm = (props) => {

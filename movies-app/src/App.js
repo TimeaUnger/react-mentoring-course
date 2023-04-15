@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
-import Dialog from './components/Dialog';
-import MovieForm from './components/MovieForm';
-import MovieListPage from './components/MovieListPage';
+import Dialog from './components/Dialog/Dialog';
+import MovieForm from './components/MovieForm/MovieForm';
+import MovieListPage from './components/MovieListPage/MovieListPage';
 
 function App() {
 

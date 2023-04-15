@@ -1,19 +1,8 @@
-/*
-    This component should render a movie tile from the list of movies.
-    It should take properties to receive image url, movie name, release year, and a list of relevant genres.
-    Alternatively, you can define one component property to take an object with all movie info. Additionally,
-    the component should receive a callback property to capture click event.
-
-    Optionally, you can implement a context menu popup that opens when a user clicks on three dots button
-    and contains "Edit" and "Delete" menu items.
-
-*/
-
 import React from "react";
 import './MovieTile.css';
-import defaultImage from '../assets/image-placeholder.jpg';
+import defaultImage from '../../assets/image-placeholder.jpg';
 import { useState } from 'react';
-import './MenuHamburger.css';
+import '../MenuHamburger/MenuHamburger';
 
 const MovieTile = (props) => {
 

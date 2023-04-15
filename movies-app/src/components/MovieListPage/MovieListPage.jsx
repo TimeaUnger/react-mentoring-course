@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import SearchForm from "./SearchForm";
-import MovieDetails from "./MovieDetails";
-import GenreSelect from "./GenreSelect";
-import SortControl from "./SortControl";
-import MovieTiles from "./MovieTiles";
+import SearchForm from "../SearchForm/SearchForm";
+import MovieDetails from "../MovieDetails/MovieDetails";
+import GenreSelect from "../GenreSelect/GenreSelect";
+import SortControl from "../SortControl/SortControl";
+import MovieTiles from "../MovieTiles/MovieTiles";
 
 const MovieListPage = (props) => {
 

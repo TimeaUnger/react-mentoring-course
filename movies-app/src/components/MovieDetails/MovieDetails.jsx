@@ -1,6 +1,6 @@
 import React from "react";
 import './MovieDetails.css';
-import defaultImage from '../assets/image-placeholder.jpg';
+import defaultImage from '../../assets/image-placeholder.jpg';
 
 const MovieDetails = (props) => {
 

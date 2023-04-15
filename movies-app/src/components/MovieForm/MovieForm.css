@@ -151,6 +151,6 @@
 }
 
 ::-webkit-calendar-picker-indicator {
-	background-image: url('../assets/Calendar_Icon.png');
+	background-image: url('../../assets/Calendar_Icon.png');
 	margin-right: 5px;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import './MovieTiles.css';
-import MovieTile from './MovieTile';
+import MovieTile from '../MovieTile/MovieTile';
 
 const MovieTiles = (props) => {
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './SearchForm.css';
-import Button from "./Button";
+import Button from "../Button/Button";
 
 const SearchForm = (props) => {
 
