@@ -8,8 +8,8 @@ const MovieTiles = (props) => {
       props.handleMovieClick(movie)
   }
 
-  const handleMovieAction = (action, movie) => {
-      props.handleMovieAction(action, movie);
+  const showDialogMovieForm = (action, movie) => {
+      props.showDialogMovieForm(action, movie);
   }
 
   return (
@@ -29,7 +29,7 @@ const MovieTiles = (props) => {
                   movieDetails={movie} 
                   handleMovieClick={showMovieDetails} 
                   key={movie.id}
-                  handleMovieAction={handleMovieAction}
+                  showDialogMovieForm={showDialogMovieForm}
                 />
               )
             })}
