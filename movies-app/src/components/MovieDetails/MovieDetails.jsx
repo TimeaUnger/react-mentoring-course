@@ -1,16 +1,9 @@
-/*
-    This component will render movie details when a movie is selected from the list (clicked). 
-    The details include movie poster image on the left and the rest of info on the right.
-
-    The component should take properties to receive image url, movie name, release year, rating, 
-    duration and a description. Alternatively, you can specify a single property that accepts an object with all movie info.
-*/
-
 import React from "react";
 import './MovieDetails.css';
+import defaultImage from '../../assets/image-placeholder.jpg';
 
 const MovieDetails = (props) => {
-    
+
     const toHoursAndMinutes = (totalMinutes) => {
 
       const hours = Math.floor(totalMinutes / 60);
@@ -22,6 +15,7 @@ const MovieDetails = (props) => {
     const showSearchHeader = () => {
       props.showSearchHeader();
     }
+    
     const {title, poster_path, vote_average, genres, release_date, runtime, overview} = props.movie
 
     return (
@@ -33,7 +27,13 @@ const MovieDetails = (props) => {
         <div className="moviesDetails">
           <div className="movieDetailsInner">
             <div className="movieImage">
-                <img src={poster_path} alt={title} />
+                <img 
+                  src={poster_path} alt={title} 
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src=`${defaultImage}`;
+                  }}
+                />
             </div>
             <div className="movieSummary">
               <div className="movieDetailsHeader">

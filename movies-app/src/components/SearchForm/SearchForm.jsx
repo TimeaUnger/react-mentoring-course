@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import './SearchForm.css';
+import Button from "../Button/Button";
 
 const SearchForm = (props) => {
 
-  const [searchVal, setSearchVal] = useState(props.searchVal);
+  const [searchVal, setSearchVal] = useState('');
 
   const handleSearch = (event) => {
-
     if (event.keyCode === 13) {
       props.onSearch(searchVal);
     }
 
     if (event.type === "focus") {
-      props.onSearch(searchVal);
+      props.onSearch('');
     }
   };
 
@@ -21,12 +21,20 @@ const SearchForm = (props) => {
   }
 
   const inputHandler = (event) => {
-
     setSearchVal(event.target.value)
+  }
+
+  const showAddMovieForm = () => {
+    props.showAddMovieForm('add', {})
   }
 
   return (
     <div className="searchWrapper">
+      <div className="addMovieWrapper">
+        <div className="addMovie" onClick={showAddMovieForm}>
+          + Add movie
+        </div>
+      </div>
       <div className="searchInnerContent">
         <div className="findMovieLabel">Find your movie</div>
         <div className="searchInputRow">
@@ -42,7 +50,7 @@ const SearchForm = (props) => {
             />
           </div>
           <div className="searchButton">
-            <button data-testid="searchButton" onClick={handleBtnClick} >Search</button>
+            <Button type="button" onClick={handleBtnClick}>Reset</Button>
           </div>
         </div>
       </div>

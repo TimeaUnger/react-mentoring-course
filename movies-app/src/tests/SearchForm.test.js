@@ -7,16 +7,6 @@ import SearchForm from '../components/SearchForm';
 
 describe('App SearchForm',  () => {
 
-  it('renders an input with the value equal to initial value passed in props', () => {
-
-    render(<SearchForm searchVal="Star Wars" />);
-
-    const searchInput = screen.getByTestId('searchInput');
-
-    expect(searchInput.value).toBe('Star Wars');
-
-  });
-
   it('after typing to the input and a "click" event on the Submit button, the "onChange" prop is called with proper value', () => {
     
     const mockCallback = jest.fn( (searchVal) => {
@@ -27,9 +17,9 @@ describe('App SearchForm',  () => {
 
     const searchInput = screen.getByTestId('searchInput');
     fireEvent.change(searchInput, {target: {value: 'Search Query'}});
-    const searchButton = screen.getByTestId('searchButton');
+    const searchButton = screen.getByRole('button')
     fireEvent.click(searchButton);
-
+    
     expect(mockCallback.mock.calls).toHaveLength(1);
     expect(mockCallback(searchInput.value)).toBe(searchInput.value);
   

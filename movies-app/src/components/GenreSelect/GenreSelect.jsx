@@ -16,7 +16,7 @@ const GenreSelect = (props) => {
               <li
                 key={index} 
                 onClick={onSelectHandler}
-                className={`genreItem ${props.isActive === genre && 'active'}`}
+                className={`genreItem ${props.activeGenre === genre && 'active'}`}
               >
                 { genre }
               </li>
