@@ -50,7 +50,7 @@ const SearchForm = (props) => {
             />
           </div>
           <div className="searchButton">
-            <Button type="button" onClick={handleBtnClick}>Reset</Button>
+            <Button type="button" onClick={handleBtnClick}>Search</Button>
           </div>
         </div>
       </div>

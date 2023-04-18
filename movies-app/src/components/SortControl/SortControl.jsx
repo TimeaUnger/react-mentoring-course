@@ -3,10 +3,11 @@ import './SortControl.css';
 
 const SortControl = (props) => {
 
-  const handleSortSelect = (e) => {
+  const {searchQuery, activeGenre} = props;
 
-    const selectOption = e.target.value;
-    props.handleSortSelection(selectOption);
+  const handleSortSelect = (e) => {
+    const selectedOption = e.target.value;
+    props.handleSortSelection(selectedOption, searchQuery, activeGenre);
   }
 
   return (

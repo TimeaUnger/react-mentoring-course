@@ -1,11 +1,11 @@
-import React, { useState, useEffect} from "react";
+import React from "react";
 import './GenreSelect.css';
 
 const GenreSelect = (props) => {
 
     const onSelectHandler = (event) => {
       const genre = event.target.innerHTML;
-      props.onSelect(genre) 
+      props.onGenreSelect(genre) 
     }
 
     return (

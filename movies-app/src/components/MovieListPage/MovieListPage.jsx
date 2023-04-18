@@ -7,30 +7,32 @@ import MovieTiles from "../MovieTiles/MovieTiles";
 
 const MovieListPage = (props) => {
 
-  const [searchQuery, setSearchQuery] = useState('');
   const [activeGenre, setActiveGenre] = useState('All');
   const [showMovieDetails, setShowMovieDetails] = useState(false);
   const [movieDetails, setMovieDetails] = useState({});
 
-  const { formAction, genresUnique, sortSelected, movies, handleSortSelection } = props;
-
-  const showSearchHeader = () =>{
-    setShowMovieDetails(false);
-  }
+  const {formAction, genresUnique, sortSelected, movies, searchQuery} = props;
 
   const handleSearch = (searchQuery) => {
-    setSearchQuery(searchQuery);
     props.handleSearch(searchQuery);
-    setActiveGenre('All')
+    setActiveGenre('All');
   }
   
+  const handleGenreSelect = (selectedGenre) => {
+    props.handleGenreSelection(selectedGenre);
+    setActiveGenre(selectedGenre)
+  }
+  
+  const handleSortSelection = (sortSelected) => {
+    props.handleSortSelect(sortSelected);
+  }
+
   const showDialogMovieForm = (action, movie) => {
     props.showDialogMovieForm(action, movie);
   }
-
-  const handleGenreSelect = (selectedGenre) => {
-    setActiveGenre(selectedGenre);
-    props.showMoviesByGenre(selectedGenre);
+  
+  const showSearchHeader = () =>{
+    setShowMovieDetails(false);
   }
 
   const handleTileClick = (movieDetails) => {
@@ -62,11 +64,16 @@ const MovieListPage = (props) => {
       <div className="pageBody">
         <div className="selectSection">
           <GenreSelect 
-            onSelect={handleGenreSelect} 
+            onGenreSelect={handleGenreSelect} 
             genres={genresUnique} 
             activeGenre={activeGenre}
+            searchQuery={activeGenre}
           />
-          <SortControl handleSortSelection={handleSortSelection} />
+          <SortControl 
+            handleSortSelection={handleSortSelection} 
+            searchQuery={searchQuery} 
+            activeGenre={activeGenre}
+          />
         </div>
         {movies && 
           <MovieTiles 

@@ -3,18 +3,25 @@ import './App.css';
 import Dialog from './components/Dialog/Dialog';
 import MovieForm from './components/MovieForm/MovieForm';
 import MovieListPage from './components/MovieListPage/MovieListPage';
+import { Routes, Route, useSearchParams } from 'react-router-dom';
 
 function App() {
 
   const [movies, setMovies] = useState([]);
   const [movieDetailsOnSubimt, setMovieDetailsOnSubmit] = useState({});
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchBy, setSearchBy] = useState('title');
-  const [sortSelected, setSortSelected] = useState("release_date");
+  const [selectedGenre, setSelectedGenre] = useState('All');
   const [modalOpen, setModalVisibility] = useState(false);
   const [formAction, setFormAction] = useState(false);
   const [formData, setFormData] = useState(false);
-  const moviesUrl = `http://localhost:4000/movies?search=${searchQuery}&searchBy=${searchBy}&sortBy=${sortSelected}&sortOrder=asc`;
+  const [searchParams, setSearchParams] = useSearchParams(
+    {
+      search: '', 
+      searchBy: 'title', 
+      sortBy: 'release_date'
+    });
+
+  const moviesUrl = `http://localhost:4000/movies?${searchParams}&sortOrder=asc&limit=20`;
 
   const genresAll = [
     "All", 
@@ -39,15 +46,36 @@ function App() {
         .catch((err) => {
           console.log(err.message);
         });
-  }, [sortSelected, searchQuery, searchBy]);
- 
+  }, [searchParams]);
+
   const handleSearch = (searchQuery) => {
     setSearchQuery(searchQuery);
-    setSearchBy('title');
+    setSelectedGenre('All');
+    setSearchParams({search: searchQuery, searchBy: 'title'})
   }
 
   const handleSortSelection = (sortBy) => {
-    setSortSelected(sortBy);
+
+    if(selectedGenre === 'All'){
+      setSearchParams({search: searchQuery, searchBy: 'title', sortBy: sortBy})
+    }
+    else{
+      setSearchParams({search: searchQuery, searchBy: 'genres', sortBy: sortBy})
+    }
+  }
+
+  const handleGenreSelection = (selectedGenre) => {
+
+    setSearchQuery(selectedGenre);
+
+    if(selectedGenre === "All"){
+      setSelectedGenre('All');
+      setSearchParams({search: '', searchBy: 'title'})
+    }
+    else{
+      setSelectedGenre(selectedGenre);
+      setSearchParams({search: selectedGenre, searchBy: 'genres', sortBy: 'release_date'})
+    }
   }
 
   const handleCloseModal = () => {
@@ -66,27 +94,23 @@ function App() {
     setFormData(movie);
   }
 
-  const showMoviesByGenre = (selectedGenre) => {
-    if(selectedGenre === "All"){
-      setSearchQuery('');
-    }
-    else{
-      setSearchQuery(selectedGenre);
-      setSearchBy('genres');
-    }
-  }
-
   return (
     <div className="App">
-      <MovieListPage 
-        showDialogMovieForm={showDialogMovieForm}
-        genresUnique={genresAll}
-        sortSelected={sortSelected}
-        handleSortSelection={handleSortSelection}
-        movies={movies}
-        handleSearch={handleSearch}
-        showMoviesByGenre={showMoviesByGenre}
-      />
+      <Routes>
+        <Route path='/' element={
+          
+          <MovieListPage 
+            showDialogMovieForm={showDialogMovieForm}
+            genresUnique={genresAll}
+            handleSortSelect={handleSortSelection}
+            movies={movies}
+            handleSearch={handleSearch}
+            searchQuery={searchQuery}
+            handleGenreSelection={handleGenreSelection}
+          />
+          } 
+        />
+      </Routes>
       <Dialog handleCloseModal={handleCloseModal} modalOpen={modalOpen} >
         {formAction &&
           <MovieForm 
