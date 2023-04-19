@@ -12,7 +12,7 @@ const SearchForm = (props) => {
     }
 
     if (event.type === "focus") {
-      props.onSearch('');
+      setSearchVal('')
     }
   };
 

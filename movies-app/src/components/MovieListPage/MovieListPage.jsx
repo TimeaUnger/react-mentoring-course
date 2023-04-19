@@ -10,21 +10,25 @@ const MovieListPage = (props) => {
   const [activeGenre, setActiveGenre] = useState('All');
   const [showMovieDetails, setShowMovieDetails] = useState(false);
   const [movieDetails, setMovieDetails] = useState({});
+  const [sortOption, setSortOption] = useState('release_date');
 
   const {formAction, genresUnique, sortSelected, movies, searchQuery} = props;
 
   const handleSearch = (searchQuery) => {
     props.handleSearch(searchQuery);
     setActiveGenre('All');
+    setSortOption('release_date');
   }
   
   const handleGenreSelect = (selectedGenre) => {
     props.handleGenreSelection(selectedGenre);
-    setActiveGenre(selectedGenre)
+    setActiveGenre(selectedGenre);
+    setSortOption('release_date');
   }
   
   const handleSortSelection = (sortSelected) => {
     props.handleSortSelect(sortSelected);
+    setSortOption(sortSelected)
   }
 
   const showDialogMovieForm = (action, movie) => {
@@ -73,6 +77,7 @@ const MovieListPage = (props) => {
             handleSortSelection={handleSortSelection} 
             searchQuery={searchQuery} 
             activeGenre={activeGenre}
+            selectedSortOption={sortOption}
           />
         </div>
         {movies && 

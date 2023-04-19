@@ -51,7 +51,7 @@ function App() {
   const handleSearch = (searchQuery) => {
     setSearchQuery(searchQuery);
     setSelectedGenre('All');
-    setSearchParams({search: searchQuery, searchBy: 'title'})
+    setSearchParams({search: searchQuery, searchBy: 'title', sortBy: 'release_date'})
   }
 
   const handleSortSelection = (sortBy) => {
@@ -70,7 +70,7 @@ function App() {
 
     if(selectedGenre === "All"){
       setSelectedGenre('All');
-      setSearchParams({search: '', searchBy: 'title'})
+      setSearchParams({search: '', searchBy: 'title', sortBy: 'release_date'})
     }
     else{
       setSelectedGenre(selectedGenre);

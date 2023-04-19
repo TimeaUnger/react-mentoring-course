@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from 'react';
 import './SortControl.css';
 
 const SortControl = (props) => {
 
-  const {searchQuery, activeGenre} = props;
+  const {searchQuery, activeGenre, selectedSortOption} = props;
 
   const handleSortSelect = (e) => {
     const selectedOption = e.target.value;
@@ -14,8 +14,8 @@ const SortControl = (props) => {
     <div className="sortControlWrapper">
       <span className="sortByLabel">SortBy</span>
       <span className="sortByControl">
-        <select className="sortBySelect" onChange={handleSortSelect}>
-          <option className="sortOption" value="release_date">Release Date</option>
+        <select className="sortBySelect" onChange={handleSortSelect} value={selectedSortOption}>
+          <option className="sortOption" value="release_date" >Release Date</option>
           <option className="sortOption" value="title">Title</option>
         </select>
       </span>
