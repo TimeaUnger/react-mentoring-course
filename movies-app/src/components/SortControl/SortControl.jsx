@@ -1,12 +1,36 @@
 import React, { useState } from "react";
 import "./SortControl.css";
+import { useSearchParams, useLocation } from "react-router-dom";
 
-const SortControl = (props) => {
-  const { selectedSortOption } = props;
+const SortControl = () => {
+
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const [sortOption, setSortOption] = useState("release_date");
+  const activeGenre = location.search !== "" ? searchParams.get("activeGenre") : "All";
+  const searchQuery = location.search !== "" ? searchParams.get("search") : "";
 
   const handleSortSelect = (e) => {
+
     const selectedOption = e.target.value;
-    props.handleSortSelection(selectedOption, selectedSortOption);
+
+    if (activeGenre === "All") {
+      setSearchParams({
+        search: searchQuery,
+        searchBy: "title",
+        sortBy: selectedOption,
+        activeGenre: activeGenre
+      });
+    } else {
+      setSearchParams({
+        search: searchQuery,
+        searchBy: "genres",
+        sortBy: selectedOption,
+        activeGenre: activeGenre
+      });
+    }
+
+    setSortOption(selectedOption);
   };
 
   return (
@@ -16,7 +40,7 @@ const SortControl = (props) => {
         <select
           className="sortBySelect"
           onChange={handleSortSelect}
-          value={selectedSortOption}
+          value={sortOption}
         >
           <option className="sortOption" value="release_date">
             Release Date

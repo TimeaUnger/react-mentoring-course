@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import "./SearchForm.css";
 import Button from "../Button/Button";
+import { useSearchParams } from "react-router-dom";
 
 const SearchForm = (props) => {
   
   const [searchVal, setSearchVal] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams({});
 
   const handleSearch = (event) => {
+
     if (event.keyCode === 13) {
-      props.onSearch(searchVal);
+
+      setSearchParams({
+        search: searchVal,
+        searchBy: "title",
+        sortBy: "release_date",
+        activeGenre: "All"
+      });
     }
 
     if (event.type === "focus") {
@@ -17,7 +26,12 @@ const SearchForm = (props) => {
   };
 
   const handleBtnClick = () => {
-    props.onSearch(searchVal);
+    setSearchParams({
+      search: searchVal,
+      searchBy: "title",
+      sortBy: "release_date",
+      activeGenre: "All"
+    });
   };
 
   const inputHandler = (event) => {

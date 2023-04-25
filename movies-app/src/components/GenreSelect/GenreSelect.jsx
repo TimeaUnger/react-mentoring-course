@@ -1,10 +1,35 @@
 import React from "react";
 import "./GenreSelect.css";
+import { useSearchParams } from "react-router-dom";
 
 const GenreSelect = (props) => {
+
+  const [searchParams, setSearchParams] = useSearchParams({});
+
+  const activeGenre = searchParams.get("activeGenre") ? searchParams.get("activeGenre") : "All";
+  const sortBy = searchParams.get("sortBy");
+
   const onSelectHandler = (event) => {
-    const genre = event.target.innerHTML;
-    props.onGenreSelect(genre);
+
+    const selectedGenre = event.target.innerHTML;
+    
+    if (selectedGenre === "All") {
+
+      setSearchParams({
+        search: "",
+        searchBy: "title",
+        sortBy: sortBy,
+        activeGenre: "All"
+      });
+    } else {
+
+      setSearchParams({
+        search: selectedGenre,
+        searchBy: "genres",
+        sortBy: sortBy,
+        activeGenre: selectedGenre
+      });
+    }
   };
 
   return (
@@ -15,7 +40,7 @@ const GenreSelect = (props) => {
             <li
               key={index}
               onClick={onSelectHandler}
-              className={`genreItem ${props.activeGenre === genre && "active"}`}
+              className={`genreItem ${activeGenre === genre && "active"}`}
             >
               {genre}
             </li>

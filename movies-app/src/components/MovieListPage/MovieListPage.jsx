@@ -9,12 +9,12 @@ const MovieListPage = (props) => {
   const { genres, sortSelected } = props;
   const [movies, setMovies] = useState([]);
   const [activeGenre, setActiveGenre] = useState("All");
-  const [sortOption, setSortOption] = useState("release_date");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useSearchParams({
     search: '',
     searchBy: "title",
     sortBy: "release_date",
+    activeGenre: "All"
   });
 
   const moviesUrl = `http://localhost:4000/movies?${searchParams}&sortOrder=asc&limit=20`;
@@ -31,46 +31,6 @@ const MovieListPage = (props) => {
       });
   }, [searchParams]);
 
-  const handleGenreSelect = (selectedGenre) => {
-    setSearchQuery(selectedGenre);
-
-    if (selectedGenre === "All") {
-      setActiveGenre("All");
-      setSearchParams({
-        search: "",
-        searchBy: "title",
-        sortBy: "release_date",
-      });
-    } else {
-      setActiveGenre(selectedGenre);
-      setSearchParams({
-        search: selectedGenre,
-        searchBy: "genres",
-        sortBy: "release_date",
-      });
-    }
-
-    setSortOption("release_date");
-  };
-
-  const handleSortSelection = (sortBy, selectedGenre) => {
-    if (selectedGenre === "All") {
-      setSearchParams({
-        search: searchQuery,
-        searchBy: "title",
-        sortBy: sortBy,
-      });
-    } else {
-      setSearchParams({
-        search: searchQuery,
-        searchBy: "genres",
-        sortBy: sortBy,
-      });
-    }
-
-    setSortOption(sortBy);
-  };
-
   const showDialogMovieForm = (action, movie) => {
     props.showDialogMovieForm(action, movie);
   };
@@ -83,18 +43,8 @@ const MovieListPage = (props) => {
 
       <div className="pageBody">
         <div className="selectSection">
-          <GenreSelect
-            onGenreSelect={handleGenreSelect}
-            genres={genres}
-            activeGenre={activeGenre}
-            searchQuery={activeGenre}
-          />
-          <SortControl
-            handleSortSelection={handleSortSelection}
-            searchQuery={searchQuery}
-            activeGenre={activeGenre}
-            selectedSortOption={sortOption}
-          />
+          <GenreSelect genres={genres} />
+          <SortControl />
         </div>
         {movies && (
           <MovieTiles

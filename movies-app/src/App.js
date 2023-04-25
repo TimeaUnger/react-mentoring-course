@@ -33,11 +33,6 @@ function App() {
     "Action"
   ];
 
-  const handleSearch = (searchQuery) => {
-    // const searchUrl = `?search=${searchQuery}&searchBy=title&&sortBy=release_date&sortOrder=asc&limit=20`;
-    //window.location.replace(searchUrl);
-  }
-
   const handleCloseModal = () => {
     setModalVisibility(false);
     setFormAction(false);
@@ -60,10 +55,7 @@ function App() {
         <Route
           path={`/`}
           element={
-            <SearchForm
-              showDialogMovieForm={showDialogMovieForm}
-              onSearch={handleSearch}
-            />
+            <SearchForm showDialogMovieForm={showDialogMovieForm} />
           }
         />
         <Route path="/:id" element={<MovieDetails />} loader={getData} />
