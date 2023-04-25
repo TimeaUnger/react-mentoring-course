@@ -1,11 +1,11 @@
+import React from "react";
 
-import React  from "react";
-
-const Button = ({type, className, onClick, children }) => {
-
-    return(
-        <button type={type} className={className} onClick={onClick}>{children}</button>
-    )
-}
+const Button = ({ type, className, onClick, children }) => {
+  return (
+    <button type={type} className={className} onClick={onClick}>
+      {children}
+    </button>
+  );
+};
 
 export default Button;
