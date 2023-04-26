@@ -5,22 +5,20 @@ import MovieTiles from "../MovieTiles/MovieTiles";
 import { useSearchParams, Outlet } from "react-router-dom";
 
 const MovieListPage = (props) => {
-
+  
   const { genres, sortSelected } = props;
   const [movies, setMovies] = useState([]);
-  const [activeGenre, setActiveGenre] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams({
-    search: '',
+
+  const [searchParams] = useSearchParams({
+    search: "",
     searchBy: "title",
     sortBy: "release_date",
-    activeGenre: "All"
+    activeGenre: "All",
   });
 
   const moviesUrl = `http://localhost:4000/movies?${searchParams}&sortOrder=asc&limit=20`;
 
   useEffect(() => {
-
     fetch(moviesUrl)
       .then((response) => response.json())
       .then((res) => {
@@ -51,7 +49,6 @@ const MovieListPage = (props) => {
             movies={movies}
             sortSelected={sortSelected}
             showDialogMovieForm={showDialogMovieForm}
-            searchQuery={searchQuery}
           />
         )}
       </div>

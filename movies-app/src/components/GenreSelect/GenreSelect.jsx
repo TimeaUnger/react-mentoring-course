@@ -1,18 +1,18 @@
 import React from "react";
 import "./GenreSelect.css";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 
 const GenreSelect = (props) => {
 
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams({});
-
   const activeGenre = searchParams.get("activeGenre") ? searchParams.get("activeGenre") : "All";
-  const sortBy = searchParams.get("sortBy");
+  const sortBy = location.search !== "" ? searchParams.get("sortBy") : "release_date";
 
   const onSelectHandler = (event) => {
 
     const selectedGenre = event.target.innerHTML;
-    
+
     if (selectedGenre === "All") {
 
       setSearchParams({

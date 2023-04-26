@@ -4,19 +4,16 @@ import Button from "../Button/Button";
 import { useSearchParams } from "react-router-dom";
 
 const SearchForm = (props) => {
-  
   const [searchVal, setSearchVal] = useState("");
   const [searchParams, setSearchParams] = useSearchParams({});
 
   const handleSearch = (event) => {
-
     if (event.keyCode === 13) {
-
       setSearchParams({
         search: searchVal,
         searchBy: "title",
         sortBy: "release_date",
-        activeGenre: "All"
+        activeGenre: "All",
       });
     }
 
@@ -30,7 +27,7 @@ const SearchForm = (props) => {
       search: searchVal,
       searchBy: "title",
       sortBy: "release_date",
-      activeGenre: "All"
+      activeGenre: "All",
     });
   };
 
