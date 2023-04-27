@@ -1,12 +1,12 @@
 import React from "react";
 import "./MovieDetails.css";
 import defaultImage from "../../assets/image-placeholder.jpg";
-import { Link, useLoaderData, useParams } from "react-router-dom";
-import { useCurrentPath } from "../../Helpers/urlHepler";
+import { Link, useLoaderData, useParams, useLocation } from "react-router-dom";
 
-const MovieDetails = (props) => {
+const MovieDetails = () => {
 
-  const PATH = useCurrentPath();
+  const location = useLocation();
+  const PATH = location.search;
 
   useParams();
   const movieData = useLoaderData();

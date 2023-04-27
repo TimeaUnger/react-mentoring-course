@@ -3,12 +3,12 @@ import "./MovieTile.css";
 import defaultImage from "../../assets/image-placeholder.jpg";
 import { useState } from "react";
 import "../MenuHamburger/MenuHamburger";
-import { Link } from "react-router-dom";
-import { useCurrentPath } from "../../Helpers/urlHepler";
+import { Link, useLocation } from "react-router-dom";
 
 const MovieTile = (props) => {
-  const PATH = useCurrentPath();
-
+  const location = useLocation();
+  const PATH = location.search;
+  
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState("");
 
