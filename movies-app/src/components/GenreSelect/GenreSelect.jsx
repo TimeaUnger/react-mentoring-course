@@ -11,7 +11,7 @@ const GenreSelect = (props) => {
 
   const onSelectHandler = (event) => {
 
-    // the original text is upparces
+    // the original text is uppercase
     // need to convert it to capitalized 
     const genreText = event.target.innerText.toLowerCase();
     const selectedGenre = genreText[0].toUpperCase() + genreText.slice(1);
