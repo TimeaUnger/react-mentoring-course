@@ -3,12 +3,13 @@ import "./SortControl.css";
 import { useSearchParams, useLocation } from "react-router-dom";
 
 const SortControl = () => {
-  const location = useLocation();
+  const { search } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams({});
 
-  const activeGenre = location.search !== "" ? searchParams.get("activeGenre") : "All";
-  const searchQuery = location.search !== "" ? searchParams.get("search") : "";
-  const sortOption = location.search !== "" ? searchParams.get("sortBy") : "release_date";
+  const activeGenre =searchParams.get("activeGenre") || "All";
+  const searchQuery = searchParams.get("search") || "";
+
+  const sortOption = search !== "" ? searchParams.get("sortBy") : "release_date";
 
   const handleSortSelect = (e) => {
     const selectedOption = e.target.value;

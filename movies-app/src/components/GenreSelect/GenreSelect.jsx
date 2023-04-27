@@ -4,14 +4,17 @@ import { useSearchParams, useLocation } from "react-router-dom";
 
 const GenreSelect = (props) => {
 
-  const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams({});
-  const activeGenre = searchParams.get("activeGenre") ? searchParams.get("activeGenre") : "All";
-  const sortBy = location.search !== "" ? searchParams.get("sortBy") : "release_date";
+  const { search } = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeGenre = searchParams.get("activeGenre") || "All";
+  const sortBy = search !== "" ? searchParams.get("sortBy") : "release_date";
 
   const onSelectHandler = (event) => {
 
-    const selectedGenre = event.target.innerHTML;
+    // the original text is upparces
+    // need to convert it to capitalized 
+    const genreText = event.target.innerText.toLowerCase();
+    const selectedGenre = genreText[0].toUpperCase() + genreText.slice(1);
 
     if (selectedGenre === "All") {
 
