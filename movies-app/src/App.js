@@ -51,7 +51,7 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path={`/`} element={<MovieListPage genres={genres} />}>
+      <Route path={`/`} element={<MovieListPage genres={genres} showDialogMovieForm={showDialogMovieForm}/>}>
         <Route
           path={`/`}
           element={

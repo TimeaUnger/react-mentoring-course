@@ -5,7 +5,7 @@ import MovieTiles from "../MovieTiles/MovieTiles";
 import { useSearchParams, Outlet } from "react-router-dom";
 
 const MovieListPage = (props) => {
-  
+
   const { genres, sortSelected } = props;
   const [movies, setMovies] = useState([]);
 

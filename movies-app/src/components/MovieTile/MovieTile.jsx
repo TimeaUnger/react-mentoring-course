@@ -6,9 +6,10 @@ import "../MenuHamburger/MenuHamburger";
 import { Link, useLocation } from "react-router-dom";
 
 const MovieTile = (props) => {
+  
   const location = useLocation();
   const PATH = location.search;
-  
+
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState("");
 
