@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Select from "react-select";
 import Button from "../Button/Button";
 import "./AddMovieForm.css";
-import { useForm } from "react-hook-form";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
 
 const AddMovieForm = () => {
 
-  const [searchParams] = useSearchParams();
   const location = useLocation();
   const PATH = location.search;
   
@@ -19,7 +18,7 @@ const AddMovieForm = () => {
   const objSearchParams = {};
 
   if (searchStr[0].length > 0) {
-    searchStr?.map((param, index) => {
+    searchStr?.forEach((param, index) => {
       const paramVal = param.split("=");
       objSearchParams[paramVal[0]] = paramVal[1];
     });
@@ -39,13 +38,14 @@ const AddMovieForm = () => {
 
   const objGenresAll = [];
   // set existing genres if any into correct object format for multi-select options
-  genresAll?.map((genre) => {
+  genresAll?.forEach((genre) => {
     objGenresAll.push({ value: `${genre}`, label: `${genre}` });
   });
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -58,6 +58,12 @@ const AddMovieForm = () => {
 
     data.vote_average = Number(data.vote_average);
     data.runtime = Number(data.runtime);
+    const arrGenres = [];
+    // convert received object to array
+    data.genres.forEach((genre) => { 
+      arrGenres.push(genre.label)
+    })
+    data.genres = arrGenres;
 
     const requestOptions = {
       method: "POST",
@@ -70,18 +76,11 @@ const AddMovieForm = () => {
       .then((data) => {
 
         const path = `/${data.id}${PATH}`;
-        const moviesUrl = `http://localhost:4000/movies?${searchParams}&sortOrder=asc&limit=10`;
-        fetch(moviesUrl)
-          .then((response) => response.json())
-          .then((movies) => {
-            navigate(path, {
-              state: [{ movieData: data }, { moviesList: movies }],
-            });
-            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-          })
-          .catch(function (err) {
-            console.info(err);
-          });
+        navigate(path, {
+          state: { shouldUpdate: true },
+        });
+
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       });
   };
 
@@ -183,19 +182,23 @@ const AddMovieForm = () => {
                     Genre
                   </label>
                   <div className="multiSelectDropDown">
-                    <span
-                      className="d-inline-block"
-                      data-toggle="popover"
-                      data-trigger="focus"
-                      data-content=""
-                    >
+                  <Controller
+                    control={control}
+                    name="genres"
+                    render={({
+                      field: { onChange, onBlur, name, ref },
+                    }) => (
                       <Select
                         defaultValue=""
                         options={objGenresAll}
-                        isMulti
-                        name="genres"
+                        onBlur={onBlur} // notify when input is touched
+                        onChange={onChange} // send value to hook form
+                        isMulti={true}
+                        name={name}
+                        ref={ref}
                       />
-                    </span>
+                    )}
+                  />
                   </div>
                 </div>
                 <div className="movieRuntime">

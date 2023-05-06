@@ -10,10 +10,11 @@ const MovieDetails = () => {
   const location = useLocation();
   const PATH = location.search;
 
-  const url = `http://localhost:4000/movies/${id}`;
-  const [data] = useFetch(url);
+  const update = !location.state ? false : location.state.shouldUpdate;
 
-  const movieData = !location.state ? data : location.state[0].movieData
+  const url = `http://localhost:4000/movies/${id}`;
+  const [data] = useFetch(url, update);
+  const movieData =  data;
 
   const toHoursAndMinutes = (totalMinutes) => {
     const hours = Math.floor(totalMinutes / 60);

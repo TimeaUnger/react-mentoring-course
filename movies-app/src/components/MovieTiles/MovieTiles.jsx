@@ -16,22 +16,23 @@ const MovieTiles = () => {
 
   // existing search params
   if (searchStr[0].length > 0) {
-    searchStr?.map((param, index) => {
+    searchStr?.forEach((param) => {
       const paramVal = param.split("=");
       objSearchParams[paramVal[0]] = paramVal[1];
     });
   }
-  // inital load /
+  // initial load /
   else{
     objSearchParams.sortBy = 'release_date';
   }
 
   const [searchParams] = useSearchParams(objSearchParams);
+  const update = !location.state ? false : location.state.shouldUpdate;
 
   const moviesUrl = `http://localhost:4000/movies?${searchParams}&sortOrder=asc&limit=10`;
-  const [data] = useFetch(moviesUrl);
 
-  const movieData = !location.state ? data?.data : location.state[1].moviesList.data;
+  const [data] = useFetch(moviesUrl, update);
+  const movieData =  data?.data;
 
   return (
     !isMount && 

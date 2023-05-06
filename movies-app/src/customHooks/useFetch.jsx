@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
-const useFetch = (url) => {
+const useFetch = (url, shouldUpdate) => {
 
   const [data, setData] = useState();
 
@@ -19,7 +19,7 @@ const useFetch = (url) => {
     }
 
     dataFetch();
-  }, [url]);
+  }, [url, shouldUpdate]);
 
   return [data];
 };
