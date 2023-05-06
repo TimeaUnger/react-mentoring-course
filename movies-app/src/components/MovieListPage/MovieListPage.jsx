@@ -1,83 +1,59 @@
-import React, { useState } from 'react';
-import SearchForm from "../SearchForm/SearchForm";
-import MovieDetails from "../MovieDetails/MovieDetails";
+import React, { useState, useEffect } from "react";
 import GenreSelect from "../GenreSelect/GenreSelect";
 import SortControl from "../SortControl/SortControl";
 import MovieTiles from "../MovieTiles/MovieTiles";
+import { useSearchParams, Outlet } from "react-router-dom";
 
 const MovieListPage = (props) => {
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeGenre, setActiveGenre] = useState('All');
-  const [showMovieDetails, setShowMovieDetails] = useState(false);
-  const [movieDetails, setMovieDetails] = useState({});
+  const { genres, sortSelected } = props;
+  const [movies, setMovies] = useState([]);
 
-  const { formAction, genresUnique, sortSelected, movies, handleSortSelection } = props;
+  const [searchParams] = useSearchParams({
+    search: "",
+    searchBy: "title",
+    sortBy: "release_date",
+    activeGenre: "All",
+  });
 
-  const showSearchHeader = () =>{
-    setShowMovieDetails(false);
-  }
+  const moviesUrl = `http://localhost:4000/movies?${searchParams}&sortOrder=asc&limit=20`;
 
-  const handleSearch = (searchQuery) => {
-    setSearchQuery(searchQuery);
-    props.handleSearch(searchQuery);
-    setActiveGenre('All')
-  }
-  
+  useEffect(() => {
+    fetch(moviesUrl)
+      .then((response) => response.json())
+      .then((res) => {
+        setMovies(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, [searchParams]);
+
   const showDialogMovieForm = (action, movie) => {
     props.showDialogMovieForm(action, movie);
-  }
-
-  const handleGenreSelect = (selectedGenre) => {
-    setActiveGenre(selectedGenre);
-    props.showMoviesByGenre(selectedGenre);
-  }
-
-  const handleTileClick = (movieDetails) => {
-    setMovieDetails(movieDetails);
-    setShowMovieDetails(true);
-    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-  }
+  };
 
   return (
-    <div className='MovieListPage'>
+    <div className="MovieListPage">
       <div className="pageHeader">
-        {showMovieDetails
-            ? <MovieDetails 
-                movie={movieDetails} 
-                showSearchHeader={showSearchHeader} 
-                showDialogMovieForm={showDialogMovieForm}
-                setMovieFormEditDelete={showDialogMovieForm}
-              />
-            : <SearchForm 
-                onSearch={handleSearch} 
-                searchVal={searchQuery} 
-                showAddMovieForm={showDialogMovieForm}
-                formAction={formAction}
-                handleSearch={handleSearch}
-              />
-        }
+        <Outlet />
       </div>
 
       <div className="pageBody">
         <div className="selectSection">
-          <GenreSelect 
-            onSelect={handleGenreSelect} 
-            genres={genresUnique} 
-            activeGenre={activeGenre}
-          />
-          <SortControl handleSortSelection={handleSortSelection} />
+          <GenreSelect genres={genres} />
+          <SortControl />
         </div>
-        {movies && 
-          <MovieTiles 
-            movies={movies} 
-            handleMovieClick={handleTileClick} 
-            sortSelected={sortSelected} 
+        {movies && (
+          <MovieTiles
+            movies={movies}
+            sortSelected={sortSelected}
             showDialogMovieForm={showDialogMovieForm}
-          />}
+          />
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default MovieListPage;

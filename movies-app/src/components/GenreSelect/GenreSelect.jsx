@@ -1,30 +1,57 @@
-import React, { useState, useEffect} from "react";
-import './GenreSelect.css';
+import React from "react";
+import "./GenreSelect.css";
+import { useSearchParams, useLocation } from "react-router-dom";
 
 const GenreSelect = (props) => {
 
-    const onSelectHandler = (event) => {
-      const genre = event.target.innerHTML;
-      props.onSelect(genre) 
-    }
+  const { search } = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeGenre = searchParams.get("activeGenre") || "All";
+  const sortBy = search !== "" ? searchParams.get("sortBy") : "release_date";
 
-    return (
-      <div className="genreSelect">
-        <ul data-testid="GenreListItem" aria-label="genresAll">
-          {props.genres.map((genre, index) => {
-            return (
-              <li
-                key={index} 
-                onClick={onSelectHandler}
-                className={`genreItem ${props.activeGenre === genre && 'active'}`}
-              >
-                { genre }
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    );
-}
+  const onSelectHandler = (event) => {
+
+    // the original text is uppercase
+    // need to convert it to capitalized 
+    const genreText = event.target.innerText.toLowerCase();
+    const selectedGenre = genreText[0].toUpperCase() + genreText.slice(1);
+
+    if (selectedGenre === "All") {
+
+      setSearchParams({
+        search: "",
+        searchBy: "title",
+        sortBy: sortBy,
+        activeGenre: "All"
+      });
+    } else {
+
+      setSearchParams({
+        search: selectedGenre,
+        searchBy: "genres",
+        sortBy: sortBy,
+        activeGenre: selectedGenre
+      });
+    }
+  };
+
+  return (
+    <div className="genreSelect">
+      <ul data-testid="GenreListItem" aria-label="genresAll">
+        {props.genres.map((genre, index) => {
+          return (
+            <li
+              key={index}
+              onClick={onSelectHandler}
+              className={`genreItem ${activeGenre === genre && "active"}`}
+            >
+              {genre}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
 
 export default GenreSelect;

@@ -1,103 +1,83 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import './App.css';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider
+} from 'react-router-dom';
+
 import Dialog from './components/Dialog/Dialog';
 import MovieForm from './components/MovieForm/MovieForm';
 import MovieListPage from './components/MovieListPage/MovieListPage';
+import MovieDetails, { getData } from "./components/MovieDetails/MovieDetails";
+import SearchForm from "./components/SearchForm/SearchForm";
 
 function App() {
 
-  const [movies, setMovies] = useState([]);
-  const [movieDetailsOnSubimt, setMovieDetailsOnSubmit] = useState({});
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchBy, setSearchBy] = useState('title');
-  const [sortSelected, setSortSelected] = useState("release_date");
   const [modalOpen, setModalVisibility] = useState(false);
   const [formAction, setFormAction] = useState(false);
   const [formData, setFormData] = useState(false);
-  const moviesUrl = `http://localhost:4000/movies?search=${searchQuery}&searchBy=${searchBy}&sortBy=${sortSelected}&sortOrder=asc`;
+  const [movieDetailsOnSubimt, setMovieDetailsOnSubmit] = useState({});
 
-  const genresAll = [
-    "All", 
-    "Drama", 
-    "Romance", 
-    "Animation", 
+  const genres = [
+    "All",
+    "Drama",
+    "Romance",
+    "Animation",
     "Advaneture",
-    "Family", 
+    "Family",
     "Comedy",
     "Fantasy",
     "Science Fiction",
     "Action"
   ];
 
-  useEffect(() => {
-    
-    fetch(moviesUrl)
-      .then((response) => response.json())
-        .then((res) => {
-          setMovies(res.data);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-  }, [sortSelected, searchQuery, searchBy]);
- 
-  const handleSearch = (searchQuery) => {
-    setSearchQuery(searchQuery);
-    setSearchBy('title');
-  }
-
-  const handleSortSelection = (sortBy) => {
-    setSortSelected(sortBy);
-  }
-
   const handleCloseModal = () => {
     setModalVisibility(false);
     setFormAction(false);
   }
-  
+
   const handleSubmit = (formData, action) => {
     // console.log(formData)
     setMovieDetailsOnSubmit(formData);
   }
 
-  const showDialogMovieForm  = (action, movie) => {
+  const showDialogMovieForm = (action, movie) => {
     setModalVisibility(true);
     setFormAction(action);
     setFormData(movie);
   }
 
-  const showMoviesByGenre = (selectedGenre) => {
-    if(selectedGenre === "All"){
-      setSearchQuery('');
-    }
-    else{
-      setSearchQuery(selectedGenre);
-      setSearchBy('genres');
-    }
-  }
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path={`/`} element={<MovieListPage genres={genres} showDialogMovieForm={showDialogMovieForm}/>}>
+        <Route
+          path={`/`}
+          element={
+            <SearchForm showDialogMovieForm={showDialogMovieForm} />
+          }
+        />
+        <Route path="/:id" element={<MovieDetails />} loader={getData} />
+      </Route>
+    )
+  );
 
   return (
     <div className="App">
-      <MovieListPage 
-        showDialogMovieForm={showDialogMovieForm}
-        genresUnique={genresAll}
-        sortSelected={sortSelected}
-        handleSortSelection={handleSortSelection}
-        movies={movies}
-        handleSearch={handleSearch}
-        showMoviesByGenre={showMoviesByGenre}
-      />
+
       <Dialog handleCloseModal={handleCloseModal} modalOpen={modalOpen} >
         {formAction &&
-          <MovieForm 
-            genres={genresAll} 
-            handleSubmit={handleSubmit} 
-            formData={formData} 
+          <MovieForm
+            genres={genres}
+            handleSubmit={handleSubmit}
+            formData={formData}
             handleCloseModal={handleCloseModal}
             formAction={formAction}
           />
         }
       </Dialog>
+      <RouterProvider router={router} />
     </div>
   );
 }

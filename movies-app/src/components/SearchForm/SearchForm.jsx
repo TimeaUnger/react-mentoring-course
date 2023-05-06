@@ -1,37 +1,48 @@
 import React, { useState } from "react";
-import './SearchForm.css';
+import "./SearchForm.css";
 import Button from "../Button/Button";
+import { useSearchParams } from "react-router-dom";
 
 const SearchForm = (props) => {
-
-  const [searchVal, setSearchVal] = useState('');
+  const [searchVal, setSearchVal] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams({});
 
   const handleSearch = (event) => {
     if (event.keyCode === 13) {
-      props.onSearch(searchVal);
+      setSearchParams({
+        search: searchVal,
+        searchBy: "title",
+        sortBy: "release_date",
+        activeGenre: "All",
+      });
     }
 
     if (event.type === "focus") {
-      props.onSearch('');
+      setSearchVal("");
     }
   };
 
   const handleBtnClick = () => {
-    props.onSearch(searchVal);
-  }
+    setSearchParams({
+      search: searchVal,
+      searchBy: "title",
+      sortBy: "release_date",
+      activeGenre: "All",
+    });
+  };
 
   const inputHandler = (event) => {
-    setSearchVal(event.target.value)
-  }
+    setSearchVal(event.target.value);
+  };
 
-  const showAddMovieForm = () => {
-    props.showAddMovieForm('add', {})
-  }
+  const showDialogMovieForm = () => {
+    props.showDialogMovieForm("add", {});
+  };
 
   return (
     <div className="searchWrapper">
       <div className="addMovieWrapper">
-        <div className="addMovie" onClick={showAddMovieForm}>
+        <div className="addMovie" onClick={showDialogMovieForm}>
           + Add movie
         </div>
       </div>
@@ -50,12 +61,14 @@ const SearchForm = (props) => {
             />
           </div>
           <div className="searchButton">
-            <Button type="button" onClick={handleBtnClick}>Reset</Button>
+            <Button type="button" onClick={handleBtnClick}>
+              Search
+            </Button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
+};
 
-}
 export default SearchForm;
