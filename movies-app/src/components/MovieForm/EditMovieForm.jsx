@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
 import Button from "../Button/Button";
 import "./AddMovieForm.css";
@@ -10,6 +10,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
+import { objGenresFormSelect } from "../../shared/objGenresFormSelect";
 
 const EditMovieForm = () => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const EditMovieForm = () => {
   const objSearchParams = {};
 
   if (searchStr[0].length > 0) {
-    searchStr?.forEach((param, index) => {
+    searchStr?.forEach((param) => {
       const paramVal = param.split("=");
       objSearchParams[paramVal[0]] = paramVal[1];
     });
@@ -52,18 +53,38 @@ const EditMovieForm = () => {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
   } = useForm();
+
+  useEffect(() => {
+    const objGenresDefault = [];
+    // set existing genres if any into correct object format for multi-select options
+    data?.genres.forEach((genre) => {
+      objGenresDefault.push({ value: `${genre}`, label: `${genre}` });
+    });
+
+    // set existing values from data for validation on first load
+    setValue("genres", objGenresDefault);
+    setValue("title", data?.title);
+    setValue("release_date", data?.release_date);
+    setValue("vote_average", data?.vote_average);
+    setValue("overview", data?.overview);
+    setValue("runtime", data?.runtime);
+    setValue("poster_path", data?.poster_path);
+
+  }, [data, setValue]);
 
   const onSubmit = (data) => {
     data.id = Number(id);
     data.vote_average = Number(data.vote_average);
     data.runtime = Number(data.runtime);
 
-    const arrGenres = [];
     // convert received object to array
-    data.genres.forEach((genre) => { 
-      arrGenres.push(genre.label)
-    })
+    const arrGenres = [];
+    data?.genres.forEach((genre) => {
+      arrGenres.push(genre.label);
+    });
+
     data.genres = arrGenres;
 
     const requestOptions = {
@@ -86,33 +107,6 @@ const EditMovieForm = () => {
         console.info(err);
       });
   };
-  const objGenresDefault = [];
-  // set existing genres if any into correct object format for multi-select options
-  genres?.forEach((genre) => {
-    objGenresDefault.push({ value: `${genre}`, label: `${genre}` });
-  });
-
-  const genresAll = [
-    "Drama",
-    "Romance",
-    "Animation",
-    "Adventure",
-    "Family",
-    "Comedy",
-    "Fantasy",
-    "Science Fiction",
-    "Action",
-  ];
-
-  var restGenres = genres
-    ? genresAll.filter((item) => !genres.includes(item))
-    : genresAll;
-
-  const objGenresAll = [];
-  // set genres options into correct object format for multi-select options
-  restGenres?.forEach((genre) => {
-    objGenresAll.push({ value: `${genre}`, label: `${genre}` });
-  });
 
   const resetForm = () => {};
 
@@ -220,20 +214,27 @@ const EditMovieForm = () => {
                     Genre
                   </label>
                   <Controller
-                    control={control}
                     name="genres"
-                    render={({
-                      field: { onChange, onBlur, objGenresDefault, name, ref },
-                    }) => (
+                    control={control}
+                    render={({ field }) => (
                       <Select
-                        defaultValue={objGenresDefault}
-                        options={objGenresAll}
-                        onBlur={onBlur} // notify when input is touched
-                        onChange={onChange} // send value to hook form
+                        {...register("genres", {
+                          required: "This field is required.",
+                        })}
+                        {...field}
+                        placeholder="Select genres"
+                        options={objGenresFormSelect}
                         isMulti={true}
-                        name={name}
-                        ref={ref}
+                        getOptionLabel={(option) => `${option.label}`}
                       />
+                    )}
+                  />
+
+                  <ErrorMessage
+                    errors={errors}
+                    name="genres"
+                    render={({ message }) => (
+                      <span className="formValidationError">*{message}</span>
                     )}
                   />
                 </div>

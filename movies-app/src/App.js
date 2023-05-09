@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './App.scss';
 import {
   createBrowserRouter,
@@ -10,7 +10,7 @@ import {
 // import Dialog from './components/Dialog/Dialog';
 // import MovieForm from './components/MovieForm/MovieForm';
 import MovieListPage from './components/MovieListPage/MovieListPage';
-import MovieDetails, { getData } from "./components/MovieDetails/MovieDetails";
+import MovieDetails from "./components/MovieDetails/MovieDetails";
 import SearchForm from "./components/SearchForm/SearchForm";
 import AddMovieForm from "./components/MovieForm/AddMovieForm";
 import EditMovieForm from "./components/MovieForm/EditMovieForm";

@@ -5,12 +5,13 @@ import "./AddMovieForm.css";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
+import { objGenresFormSelect } from "../../shared/objGenresFormSelect";
 
 const AddMovieForm = () => {
-
+  
   const location = useLocation();
   const PATH = location.search;
-  
+
   const navigate = useNavigate();
   const urlSearch = location.search;
 
@@ -18,29 +19,11 @@ const AddMovieForm = () => {
   const objSearchParams = {};
 
   if (searchStr[0].length > 0) {
-    searchStr?.forEach((param, index) => {
+    searchStr?.forEach((param) => {
       const paramVal = param.split("=");
       objSearchParams[paramVal[0]] = paramVal[1];
     });
   }
-
-  const genresAll = [
-    "Drama",
-    "Romance",
-    "Animation",
-    "Adventure",
-    "Family",
-    "Comedy",
-    "Fantasy",
-    "Science Fiction",
-    "Action"
-  ];
-
-  const objGenresAll = [];
-  // set existing genres if any into correct object format for multi-select options
-  genresAll?.forEach((genre) => {
-    objGenresAll.push({ value: `${genre}`, label: `${genre}` });
-  });
 
   const {
     register,
@@ -55,14 +38,13 @@ const AddMovieForm = () => {
   };
 
   const onSubmit = (data) => {
-
     data.vote_average = Number(data.vote_average);
     data.runtime = Number(data.runtime);
     const arrGenres = [];
     // convert received object to array
-    data.genres.forEach((genre) => { 
-      arrGenres.push(genre.label)
-    })
+    data.genres.forEach((genre) => {
+      arrGenres.push(genre.label);
+    });
     data.genres = arrGenres;
 
     const requestOptions = {
@@ -74,7 +56,6 @@ const AddMovieForm = () => {
     fetch("http://localhost:4000/movies", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-
         const path = `/${data.id}${PATH}`;
         navigate(path, {
           state: { shouldUpdate: true },
@@ -88,7 +69,9 @@ const AddMovieForm = () => {
 
   return (
     <div className="dialog-container" id="dialogContainer">
-      <div className="closeButton" onClick={routeChange}>X</div>
+      <div className="closeButton" onClick={routeChange}>
+        X
+      </div>
       <div className="movieFormWrapper">
         <div className="movieFormBoxTitle">Add movie</div>
         <div className="movieForm">
@@ -112,7 +95,9 @@ const AddMovieForm = () => {
                   <ErrorMessage
                     errors={errors}
                     name="title"
-                    render={({ message }) =>  <span className="formValidationError">*{message}</span>}
+                    render={({ message }) => (
+                      <span className="formValidationError">*{message}</span>
+                    )}
                   />
                 </div>
                 <div className="movieReleaseDate">
@@ -131,7 +116,9 @@ const AddMovieForm = () => {
                   <ErrorMessage
                     errors={errors}
                     name="release_date"
-                    render={({ message }) => <span className="formValidationError">*{message}</span>}
+                    render={({ message }) => (
+                      <span className="formValidationError">*{message}</span>
+                    )}
                   />
                 </div>
               </div>
@@ -152,7 +139,9 @@ const AddMovieForm = () => {
                   <ErrorMessage
                     errors={errors}
                     name="poster_path"
-                    render={({ message }) => <span className="formValidationError">*{message}</span>}
+                    render={({ message }) => (
+                      <span className="formValidationError">*{message}</span>
+                    )}
                   />
                 </div>
                 <div className="movieRating">
@@ -172,7 +161,9 @@ const AddMovieForm = () => {
                   <ErrorMessage
                     errors={errors}
                     name="vote_average"
-                    render={({ message }) => <span className="formValidationError">*{message}</span>}
+                    render={({ message }) => (
+                      <span className="formValidationError">*{message}</span>
+                    )}
                   />
                 </div>
               </div>
@@ -182,23 +173,29 @@ const AddMovieForm = () => {
                     Genre
                   </label>
                   <div className="multiSelectDropDown">
-                  <Controller
-                    control={control}
-                    name="genres"
-                    render={({
-                      field: { onChange, onBlur, name, ref },
-                    }) => (
-                      <Select
-                        defaultValue=""
-                        options={objGenresAll}
-                        onBlur={onBlur} // notify when input is touched
-                        onChange={onChange} // send value to hook form
-                        isMulti={true}
-                        name={name}
-                        ref={ref}
-                      />
-                    )}
-                  />
+                    <Controller
+                      name="genres"
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          placeholder="Select genre"
+                          {...register("genres", {
+                            required: "This field is required.",
+                          })}
+                          {...field}
+                          options={objGenresFormSelect}
+                          isMulti={true}
+                          getOptionLabel={(option) => `${option.label}`}
+                        />
+                      )}
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      name="genres"
+                      render={({ message }) => (
+                        <span className="formValidationError">*{message}</span>
+                      )}
+                    />
                   </div>
                 </div>
                 <div className="movieRuntime">
@@ -217,7 +214,9 @@ const AddMovieForm = () => {
                   <ErrorMessage
                     errors={errors}
                     name="runtime"
-                    render={({ message }) => <span className="formValidationError">*{message}</span>}
+                    render={({ message }) => (
+                      <span className="formValidationError">*{message}</span>
+                    )}
                   />
                 </div>
               </div>
@@ -235,7 +234,9 @@ const AddMovieForm = () => {
                 <ErrorMessage
                   errors={errors}
                   name="overview"
-                  render={({ message }) => <span className="formValidationError">*{message}</span>}
+                  render={({ message }) => (
+                    <span className="formValidationError">*{message}</span>
+                  )}
                 />
               </div>
               <div className="formButtonsWrapper">
