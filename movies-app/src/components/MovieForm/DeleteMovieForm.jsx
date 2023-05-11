@@ -2,10 +2,14 @@ import React from "react";
 import Button from "../Button/Button";
 import "./DeleteMovieForm.css";
 import { useForm } from "react-hook-form";
-import { useParams, useSearchParams, useLocation, useNavigate } from "react-router-dom";
+import {
+  useParams,
+  useSearchParams,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 const DeleteMovieForm = () => {
-
   const [searchParams, setSearchParams] = useSearchParams({});
 
   const location = useLocation();
@@ -23,10 +27,10 @@ const DeleteMovieForm = () => {
 
   let navigate = useNavigate();
   const PATH = location.search;
-  const routeChange = () => { 
-    const path = `/${id}${PATH}`; 
+  const routeChange = () => {
+    const path = `/${id}${PATH}`;
     navigate(path);
-  }
+  };
 
   const { id } = useParams();
 
@@ -36,32 +40,21 @@ const DeleteMovieForm = () => {
   } = useForm();
 
   const onSubmit = () => {
-
-    console.log(id)
     const movieID = Number(id);
     const requestOptions = {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({id}),
     };
 
     fetch(`http://localhost:4000/movies/${movieID}`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
+      .then(() => {
 
         const path = `/${PATH}`;
-        const moviesUrl = `http://localhost:4000/movies?${searchParams}&sortOrder=asc&limit=10`;
-
-        fetch(moviesUrl)
-          .then((response) => response.json())
-          .then((movies) => {
-            navigate(path, {
-              state: [{ movieData: data }, { moviesList: movies }],
-            });
-          })
-          .catch(function (err) {
-            console.info(err);
-          });
+        navigate(path, {
+          state: { shouldUpdate: true },
+        });
+      })
+      .catch((err) => {
+        console.error(err);
       });
   };
 

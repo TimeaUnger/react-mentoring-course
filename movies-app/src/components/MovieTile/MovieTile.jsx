@@ -33,11 +33,13 @@ const MovieTile = (props) => {
   };
 
   const handleClick = () => {
+    const path = `/${id}${PATH}`;
+    navigate(path);
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   return (
-    <div className="movieTileWrapper">
+    <div className="movieTileWrapper" data-id={id}>
       <div className="editDeleteBlock">
         {isVisible && (
           <div className="editDeleteRowsWrapper">
@@ -59,7 +61,7 @@ const MovieTile = (props) => {
         )}
         <div className="editDeleteMenuWrapper">
           <div className="top-nav" id="navButton" onClick={handleMenuButton}>
-            <div className={`menu-toggle ${isOpen}`} id="menu-toggle"></div>
+            <div className={`menu-toggle ${isOpen}`} id="menu-toggle" ></div>
             <div className="menu-button-container">
               <div className="menu-button"></div>
             </div>
@@ -68,7 +70,6 @@ const MovieTile = (props) => {
       </div>
       <div className="movieTile">
         <div className="movieImage" onClick={handleClick}>
-          <Link to={`/${id}${PATH}`}>
             <img
               src={poster_path}
               alt={title}
@@ -77,7 +78,6 @@ const MovieTile = (props) => {
                 currentTarget.src = `${defaultImage}`;
               }}
             />
-          </Link>
         </div>
         <div className="movieTileDetails">
           <div className="movieTitleWrapper">

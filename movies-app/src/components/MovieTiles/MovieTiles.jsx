@@ -35,17 +35,16 @@ const MovieTiles = () => {
   const movieData =  data?.data;
 
   return (
-    !isMount && 
     <>
       <div className="foundMoviesWrapper">
         <div className="foundMovies">
-          <span className="foundMoviesNr">{data.totalAmount}</span>
+          <span className="foundMoviesNr">{data?.totalAmount}</span>
           <span className="foundMoviesTitle">movies found</span>
         </div>
       </div>
       <div className="movieListContentWrapper">
         <div className="movieTilesWrapper">
-          {movieData.map((movie) => {
+          {movieData?.map((movie) => {
             return (
               <MovieTile
                 movieDetails={movie}
