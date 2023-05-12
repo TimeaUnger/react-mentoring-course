@@ -1,15 +1,20 @@
 import React from "react";
 import "./MovieDetails.css";
 import defaultImage from "../../assets/image-placeholder.jpg";
-import { Link, useLoaderData, useParams, useLocation } from "react-router-dom";
+import {Link, useLocation, Outlet, useParams} from "react-router-dom";
+import useFetch from "../../customHooks/useFetch";
 
 const MovieDetails = () => {
 
+  const { id } = useParams();
   const location = useLocation();
   const PATH = location.search;
 
-  useParams();
-  const movieData = useLoaderData();
+  const update = !location.state ? false : location.state.shouldUpdate;
+
+  const url = `http://localhost:4000/movies/${id}`;
+  const [data] = useFetch(url, update);
+  const movieData =  data;
 
   const toHoursAndMinutes = (totalMinutes) => {
     const hours = Math.floor(totalMinutes / 60);
@@ -26,7 +31,7 @@ const MovieDetails = () => {
     release_date,
     runtime,
     overview,
-  } = movieData;
+  } = movieData || {};
 
   return (
     <div className="movieDetailsContainer">
@@ -55,10 +60,12 @@ const MovieDetails = () => {
                 <span className="movieDetailsRating">{vote_average}</span>
               </div>
             </div>
-            <div className="movieDetailsGenre">{genres.join(", ")}</div>
+            <div className="movieDetailsGenre">
+              {genres ? genres.join(", ") : ""}
+            </div>
             <div className="movieDateRuntimeWrapper">
               <div className="movieDetailsReleaseDate">
-                {release_date.substr(0, 4)}
+                {release_date?.substr(0, 4)}
               </div>
               <div className="movieDetailsRunTime">
                 {toHoursAndMinutes(runtime)}
@@ -68,13 +75,8 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 };
 export default MovieDetails;
-
-export const getData = async (data) => {
-  const res = await fetch(`http://localhost:4000/movies/${data.params.id}`);
-  const list = await res.json();
-  return list;
-};

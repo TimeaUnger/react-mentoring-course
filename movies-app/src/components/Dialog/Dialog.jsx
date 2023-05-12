@@ -12,7 +12,7 @@ const Dialog = (props) => {
   const focusTrapIsActvie = !props.modalOpen ? false : true;
 
   return ReactDOM.createPortal(
-    <FocusTrap active={focusTrapIsActvie}>
+    <FocusTrap active={focusTrapIsActvie} focusTrapOptions={{ initialFocus: "button" }}>
       <div
         className={`dialog-container ${modalVisibility}`}
         id="dialogContainer"
@@ -20,7 +20,7 @@ const Dialog = (props) => {
         <div className="closeButton" onClick={handleCloseModal}>
           X
         </div>
-        <div className="modal">{props.children}</div>
+        <div className="moda-form">{props.children}</div>
       </div>
     </FocusTrap>,
     document.getElementById("portal-root") || document.createElement("div")

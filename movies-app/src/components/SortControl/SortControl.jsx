@@ -1,34 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import "./SortControl.css";
 import { useSearchParams, useLocation } from "react-router-dom";
 
 const SortControl = () => {
   const { search } = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const activeGenre =searchParams.get("activeGenre") || "All";
-  const searchQuery = searchParams.get("search") || "";
+  const location = useLocation();
+  const urlSearch = location.search;
 
-  const sortOption = search !== "" ? searchParams.get("sortBy") : "release_date";
+  const searchStr = urlSearch.substr(1, urlSearch.length).split("&");
+  const objSearchParams = {};
+
+  if (searchStr[0].length > 0) {
+    searchStr?.map((param, index) => {
+      const paramVal = param.split("=");
+      objSearchParams[paramVal[0]] = paramVal[1];
+    });
+  }
+
+  const sortOption =
+    search !== "" ? searchParams.get("sortBy") : "release_date";
 
   const handleSortSelect = (e) => {
     const selectedOption = e.target.value;
-
-    if (activeGenre === "All") {
-      setSearchParams({
-        search: searchQuery,
-        searchBy: "title",
-        sortBy: selectedOption,
-        activeGenre: activeGenre,
-      });
-    } else {
-      setSearchParams({
-        search: searchQuery,
-        searchBy: "genres",
-        sortBy: selectedOption,
-        activeGenre: activeGenre,
-      });
-    }
+    objSearchParams.sortBy = selectedOption;
+    setSearchParams(objSearchParams);
   };
 
   return (

@@ -15,24 +15,14 @@ const GenreSelect = (props) => {
     // need to convert it to capitalized 
     const genreText = event.target.innerText.toLowerCase();
     const selectedGenre = genreText[0].toUpperCase() + genreText.slice(1);
+    const filterBy = selectedGenre === "All" ? "" : selectedGenre;
 
-    if (selectedGenre === "All") {
+    setSearchParams({
+      filter: filterBy,
+      sortBy: sortBy,
+      activeGenre: selectedGenre
+    });
 
-      setSearchParams({
-        search: "",
-        searchBy: "title",
-        sortBy: sortBy,
-        activeGenre: "All"
-      });
-    } else {
-
-      setSearchParams({
-        search: selectedGenre,
-        searchBy: "genres",
-        sortBy: sortBy,
-        activeGenre: selectedGenre
-      });
-    }
   };
 
   return (
