@@ -3,12 +3,9 @@ import "./MovieTiles.css";
 import MovieTile from "../MovieTile/MovieTile";
 import { useSearchParams, useLocation } from "react-router-dom";
 import useFetch from "../../customHooks/useFetch";
-import { useIsMount } from '../../customHooks/useIsMount';
 
 const MovieTiles = () => {
-
   const location = useLocation();
-  const isMount = useIsMount();
   const urlSearch = location.search;
   const searchStr = urlSearch.substr(1, urlSearch.length).split("&");
 
@@ -22,8 +19,8 @@ const MovieTiles = () => {
     });
   }
   // initial load /
-  else{
-    objSearchParams.sortBy = 'release_date';
+  else {
+    objSearchParams.sortBy = "release_date";
   }
 
   const [searchParams] = useSearchParams(objSearchParams);
@@ -32,7 +29,7 @@ const MovieTiles = () => {
   const moviesUrl = `http://localhost:4000/movies?${searchParams}&sortOrder=asc&limit=10`;
 
   const [data] = useFetch(moviesUrl, update);
-  const movieData =  data?.data;
+  const movieData = data?.data;
 
   return (
     <>
@@ -45,17 +42,12 @@ const MovieTiles = () => {
       <div className="movieListContentWrapper">
         <div className="movieTilesWrapper">
           {movieData?.map((movie) => {
-            return (
-              <MovieTile
-                movieDetails={movie}
-                key={movie.id}
-              />
-            );
+            return <MovieTile movieDetails={movie} key={movie.id} />;
           })}
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default MovieTiles;
