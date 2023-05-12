@@ -2,21 +2,21 @@ import React, { useState } from "react";
 import "./SearchForm.css";
 import Button from "../Button/Button";
 import { useSearchParams } from "react-router-dom";
-import { Outlet, useLocation, useNavigate  } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const SearchForm = (props) => {
   const [searchVal, setSearchVal] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [searchParams, setSearchParams] = useSearchParams();
   const { genres } = props;
 
   const location = useLocation();
   const PATH = location.search;
 
   let navigate = useNavigate();
-  const routeChange = () =>{ 
-    let path = `/new${PATH}`; 
+  const routeChange = () => {
+    let path = `/new${PATH}`;
     navigate(path);
-  }
+  };
 
   const handleSearch = (event) => {
     if (event.keyCode === 13) {
@@ -45,16 +45,16 @@ const SearchForm = (props) => {
   const inputHandler = (event) => {
     setSearchVal(event.target.value);
   };
-  
+
   const showDialogMovieForm = () => {
     props.showDialogMovieForm("add", {});
   };
-  
+
   return (
     <div className="searchWrapper">
       <div className="addMovieWrapper">
         <div className="addMovie" onClick={routeChange}>
-          + Add movie 
+          + Add movie
         </div>
       </div>
       <div className="searchInnerContent">
@@ -78,7 +78,7 @@ const SearchForm = (props) => {
           </div>
         </div>
       </div>
-      <Outlet context={[genres]}/>
+      <Outlet context={[genres]} />
     </div>
   );
 };

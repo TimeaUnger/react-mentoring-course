@@ -3,9 +3,8 @@ import "./SortControl.css";
 import { useSearchParams, useLocation } from "react-router-dom";
 
 const SortControl = () => {
-
   const { search } = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
   const urlSearch = location.search;
@@ -20,7 +19,8 @@ const SortControl = () => {
     });
   }
 
-  const sortOption = search !== "" ? searchParams.get("sortBy") : "release_date";
+  const sortOption =
+    search !== "" ? searchParams.get("sortBy") : "release_date";
 
   const handleSortSelect = (e) => {
     const selectedOption = e.target.value;

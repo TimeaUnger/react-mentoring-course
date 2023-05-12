@@ -8,22 +8,10 @@ import { ErrorMessage } from "@hookform/error-message";
 import { objGenresFormSelect } from "../../shared/objGenresFormSelect";
 
 const AddMovieForm = () => {
-  
   const location = useLocation();
-  const PATH = location.search;
-
   const navigate = useNavigate();
+
   const urlSearch = location.search;
-
-  const searchStr = urlSearch.substr(1, urlSearch.length).split("&");
-  const objSearchParams = {};
-
-  if (searchStr[0].length > 0) {
-    searchStr?.forEach((param) => {
-      const paramVal = param.split("=");
-      objSearchParams[paramVal[0]] = paramVal[1];
-    });
-  }
 
   const {
     register,
@@ -33,7 +21,7 @@ const AddMovieForm = () => {
   } = useForm();
 
   const routeChange = () => {
-    const path = `/${PATH}`;
+    const path = `/${urlSearch}`;
     navigate(path);
   };
 
@@ -56,7 +44,7 @@ const AddMovieForm = () => {
     fetch("http://localhost:4000/movies", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        const path = `/${data.id}${PATH}`;
+        const path = `/${data.id}${urlSearch}`;
         navigate(path, {
           state: { shouldUpdate: true },
         });

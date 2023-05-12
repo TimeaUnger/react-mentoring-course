@@ -4,7 +4,7 @@ describe('MoviesListPage spec', () => {
     cy.visit('/');
     cy.viewport(1780, 2500)
   });
-  
+
   it('add movie returns the added movie details shown up in the header', () => {
 
     cy.get('.addMovie').click();
@@ -44,5 +44,12 @@ describe('MoviesListPage spec', () => {
 
     cy.get('.searchWrapper').should('be.visible');
   });
-  
+
+  it('test input fields validation', () => {
+
+    cy.get('.addMovie').click();
+    cy.get('.movieFormSubmitBtn').click();
+    cy.get('.inputRow').find('span.formValidationError').its('length').should('eq', 7);
+  });
+
 });
